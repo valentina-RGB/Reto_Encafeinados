@@ -57,6 +57,9 @@ class Server {
       .use('/roles', require('./routers/roles.router.js'))
       .use('/users', require('./routers/users.router.js'))
 
+      .use('/stores', require('./routers/stores.router.js'))
+      .use('/suppliers', require('./routers/suppliers.router.js'))
+
       .use('/products', require('./routers/products.router.js'))
 
       .use('/appropiation', require('./routers/appropiations.router.js'))

@@ -1,7 +1,6 @@
-const { Router } = require('express');
-const router = Router();
+const router = require('express').Router();
 
-const appropiationDetailController = require('../controller/appropiationDetails.controller');
+const appropiationDetailController = require('../controllers/appropiationDetails.controller');
 
 router
     .get('/', appropiationDetailController.getAllAppropiationDetails)

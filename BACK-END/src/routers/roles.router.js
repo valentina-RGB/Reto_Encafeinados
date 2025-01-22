@@ -1,7 +1,6 @@
-const { Router } = require('express');
-const router = Router();
+const router = require('express').Router();
 
-const roleController = require('../controller/roles.controller');
+const roleController = require('../controllers/roles.controller');
 
 router
     .get('/', roleController.getAllRoles)
