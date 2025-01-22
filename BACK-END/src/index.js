@@ -37,8 +37,13 @@ class Server {
 
   syncDataBase = async () => {
     try {
-      // Conectar a la base de datos
-      await connectToDatabase();
+           
+      // Sincronizar los modelos con la base de datos
+      // await sequelize.sync({ alter: true });
+
+
+    // Conectar a la base de datos
+    await connectToDatabase();
 
       // Sincronizar los modelos con la base de datos
       
