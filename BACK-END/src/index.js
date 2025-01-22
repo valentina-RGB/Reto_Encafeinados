@@ -21,6 +21,9 @@ class Server {
 
     //Rutas
     this.routers();
+
+    //Base de Datos
+    this.syncDataBase();
   }
 
   middlewares() {
@@ -32,7 +35,7 @@ class Server {
 
   };
 
-  syncDatabase = async () => {
+  syncDataBase = async () => {
     try {
       // Conectar a la base de datos
       await connectToDatabase();
@@ -46,9 +49,6 @@ class Server {
   };
 
   routers() {
-    this.app
-    this.app
-
     this.app
     // Configura la carpeta pública para servir archivos estáticos
       // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
