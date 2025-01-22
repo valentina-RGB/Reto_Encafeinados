@@ -9,8 +9,6 @@ const { connectToDatabase} = require('./config/db');
 const dotenv = require('dotenv');
 dotenv.config();
 
-
-
 class Server {
 
   constructor() {
@@ -40,16 +38,13 @@ class Server {
 
   syncDataBase = async () => {
     try {
-           
-      // Sincronizar los modelos con la base de datos
-      // await sequelize.sync({ alter: true });
-
-
       // Conectar a la base de datos
       await connectToDatabase();
 
-      // Sincronizar la base de datos
-      // await sequelize.sync();
+      // Sincronizar los modelos con la base de datos
+      
+      // await sequelize.sync({ force: true });
+      await sequelize.sync({ alter: true });
 
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
@@ -57,16 +52,11 @@ class Server {
   };
 
   routers() {
-    this.app
+
+    this.app.use('/roles', require('./routers/roles.router.js'));
+
     // Configura la carpeta pública para servir archivos estáticos
-      // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
-
-      // .use('/roles', require('./routers/roles.routes.js'))
-      // .use('/usuarios', require('./routers/usuarios.routes.js'))
-
-    this.app.get("/", (req, res) => {
-      res.send("Welcome");
-    });
+    // this.app.use("/imagenes", express.static(path.join(__dirname, "../uploads")))
   };
 
   listen() {

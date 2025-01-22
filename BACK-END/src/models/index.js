@@ -2,35 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
+const { sequelize } = require('../config/db');  // Importa la instancia existente de Sequelize
+const Sequelize = require('sequelize');  // Opcional, solo si necesitas la clase Sequelize
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-require('dotenv').config();  // Asegúrate de cargar el archivo .env
-
-const config = {
-  development: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
-    port: process.env.DB_PORT,
-    ssl: process.env.DB_SSL_MODE === 'DISABLED' ? false : true,  // Asegúrate de manejar correctamente el SSL
-  },
-};
-
 const db = {};
-let sequelize;
 
-if (config[env]) {
-  sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
-} else {
-  console.error(`No se encuentra la configuración para el entorno: ${env}`);
-  process.exit(1);
-}
+const applyHooks = require('../hooks');
 
-// Aquí exportamos los modelos y la conexión a la base de datos
+// Carga dinámicamente todos los modelos
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -52,7 +31,10 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-db.sequelize = sequelize;
+// Aplicar los hooks
+applyHooks(sequelize);
+
+db.sequelize = sequelize;  // Usa la instancia compartida
 db.Sequelize = Sequelize;
 
 module.exports = db;
