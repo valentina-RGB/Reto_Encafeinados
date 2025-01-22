@@ -1,65 +1,71 @@
-const express = require('express');
-const { Sequelize } = require('sequelize');
 const cors = require('cors');
 const path = require("path");
-const { initializeSequelize } = require('./Data/data');
+const express = require('express');
 
-const db = require('./models')
-// const bodyParser = require('body-parser'); // Corregir nombre
-// const Joi = require('joi');
+const { connectToDatabase, sequelize } = require('./config/db');
 
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 class Server {
+
   constructor() {
+
     this.app = express();
+    this.host = process.env.DB_HOST || 'localhost';
     this.port = process.env.PORT;
 
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    //this.app.use(body.urlencoded({ extended: false}));
-    this.app.use(
-      cors({
-        origin: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: "Content-Type,Authorization",
-      })
-    );
-    this.Routers();
+    //Middlewares
+    this.middlewares();
 
-    this.syncDatabase();
+    //Rutas
+    this.routers();
   }
+
+  middlewares() {
+    //CORS
+    this.app.use(cors({ origin: '*' }));
+
+    //Parseo a json
+    this.app.use(express.json());
+
+  };
 
   syncDatabase = async () => {
     try {
-    //   await db.sequelize.sync({ force: true });
-    //   await db.sequelize.sync({ alter: true });
+      // Conectar a la base de datos
+      await connectToDatabase();
 
-      
-     await initializeSequelize();
-        // Resto de la inicialización de tu aplicación
-      
-    
+      // Sincronizar la base de datos
+      await sequelize.sync();
+
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
     }
   };
 
-  Routers() {
+  routers() {
     this.app
-      // Configura la carpeta pública para servir archivos estáticos
-    //   .use("/imagenes", express.static(path.join(__dirname, "../uploads")));
+    this.app
+
+    this.app
+    // Configura la carpeta pública para servir archivos estáticos
+      // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
+
+      // .use('/roles', require('./routers/roles.routes.js'))
+      // .use('/usuarios', require('./routers/usuarios.routes.js'))
 
     this.app.get("/", (req, res) => {
       res.send("Welcome");
     });
-  }
+  };
 
-  Listen() {
+  listen() {
     this.app.listen(this.port, () => {
-      console.log(` http://localhost:${this.port}`);
+      console.log(`\nhttp://${this.host}:${this.port}`);
     });
-  }
+  };
 }
 
 module.exports = Server;
