@@ -1,11 +1,14 @@
 const cors = require('cors');
 const path = require("path");
+const { Sequelize } = require('sequelize');
+// const Sequelize = require('sequelize');
 const express = require('express');
-
-const { connectToDatabase, sequelize } = require('./config/db');
+const {db, sequelize} = require('./models')
+const { connectToDatabase} = require('./config/db');
 
 const dotenv = require('dotenv');
 dotenv.config();
+
 
 
 class Server {
@@ -21,6 +24,9 @@ class Server {
 
     //Rutas
     this.routers();
+
+    //sincronizar base de datos
+    this.syncDataBase();
   }
 
   middlewares() {
@@ -32,13 +38,18 @@ class Server {
 
   };
 
-  syncDatabase = async () => {
+  syncDataBase = async () => {
     try {
+           
+      // Sincronizar los modelos con la base de datos
+      // await sequelize.sync({ alter: true });
+
+
       // Conectar a la base de datos
       await connectToDatabase();
 
       // Sincronizar la base de datos
-      await sequelize.sync();
+      // await sequelize.sync();
 
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
