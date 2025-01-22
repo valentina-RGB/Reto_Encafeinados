@@ -9,10 +9,10 @@ const getAllRoles = async (req, res) => {
     }
 };
 
-const getRoleById = async (req, res) => {
+const getOneRole = async (req, res) => {
     try {
         const { id } = req.params;
-        const role = await roleService.getRoleById(id);
+        const role = await roleService.getOneRole(id);
         res.status(200).json(role);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -21,5 +21,5 @@ const getRoleById = async (req, res) => {
 
 module.exports = {
     getAllRoles,
-    getRoleById
+    getOneRole
 };

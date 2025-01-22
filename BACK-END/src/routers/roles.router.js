@@ -5,6 +5,6 @@ const roleController = require('../controller/roles.controller');
 
 router
     .get('/', roleController.getAllRoles)
-    .get('/:id', roleController.getRoleById)
+    .get('/:id', roleController.getOneRole)
 
 module.exports = router;

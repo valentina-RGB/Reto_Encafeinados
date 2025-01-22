@@ -8,9 +8,9 @@ const getAllRoles = async () => {
     }
 };
 
-const getRoleById = async (id) => {
+const getOneRole = async (id) => {
     try {
-        return await roleRepository.getRoleById(id);
+        return await roleRepository.getOneRole(id);
     } catch (error) {
         throw error;
     }
@@ -18,5 +18,5 @@ const getRoleById = async (id) => {
 
 module.exports = {
     getAllRoles,
-    getRoleById
+    getOneRole
 };
