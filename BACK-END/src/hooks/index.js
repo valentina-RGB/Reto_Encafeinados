@@ -138,8 +138,6 @@ const validateReturnedQuantity = async (consignmentDetail, options) => {
 
 
 
-
-
 // Aplicar los hooks a los modelos
 module.exports = (sequelize) => {
 
