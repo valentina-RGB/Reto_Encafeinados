@@ -3,7 +3,6 @@ const path = require("path");
 const dotenv = require('dotenv');
 
 const express = require('express');
-const dotenv = require('dotenv');
 
 const { connectToDatabase} = require('./config/db');
 
