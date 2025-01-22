@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-require('dotenv').config();  // Asegúrate de cargar el archivo .env
+require('dotenv').config();
 
 const config = {
   development: {
@@ -16,7 +16,7 @@ const config = {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
     port: process.env.DB_PORT,
-    ssl: process.env.DB_SSL_MODE === 'DISABLED' ? false : true,  // Asegúrate de manejar correctamente el SSL
+    ssl: process.env.DB_SSL_MODE === 'DISABLED' ? false : true,
   },
 };
 
@@ -24,15 +24,19 @@ const db = {};
 let sequelize;
 
 if (config[env]) {
-  sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
+  sequelize = new Sequelize(
+    config[env].database, 
+    config[env].username, 
+    config[env].password, 
+    config[env]
+  );
 } else {
   console.error(`No se encuentra la configuración para el entorno: ${env}`);
   process.exit(1);
 }
 
-// Aquí exportamos los modelos y la conexión a la base de datos
-fs
-  .readdirSync(__dirname)
+// Primero cargar todos los modelos
+fs.readdirSync(__dirname)
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
@@ -46,13 +50,18 @@ fs
     db[model.name] = model;
   });
 
+// Luego establecer las asociaciones
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+// Finalmente, aplicar los hooks después de que los modelos estén completamente definidos
