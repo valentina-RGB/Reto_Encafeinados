@@ -11,13 +11,7 @@ const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         dialect: process.env.DB_DIALECT,
-        logging: false,
-        define: {
-            timestamps: true,
-            underscored: false,  // Usa nombres de columna tal cual los defines  
-            createdAt: 'created_at',
-            updatedAt: 'updated_at'
-          }
+        logging: false
     }
 );
 
