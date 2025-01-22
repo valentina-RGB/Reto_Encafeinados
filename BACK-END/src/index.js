@@ -1,7 +1,7 @@
 const cors = require('cors');
 const path = require("path");
-const { Sequelize } = require('sequelize');
-const {sequelize} = require('./models');
+const dotenv = require('dotenv');
+
 const express = require('express');
 const dotenv = require('dotenv');
 
@@ -56,7 +56,19 @@ class Server {
     this.app
       .use('/roles', require('./routers/roles.router.js'))
       .use('/users', require('./routers/users.router.js'))
+
+      .use('/stores', require('./routers/stores.router.js'))
+      .use('/suppliers', require('./routers/suppliers.router.js'))
+
       .use('/products', require('./routers/products.router.js'))
+      .use('/productVariants', require('./routers/productVariants.router.js'))
+      .use('/sensoryProfiles', require('./routers/sensoryProfile.router.js'))
+
+      .use('/appropiation', require('./routers/appropiations.router.js'))
+      .use('/appropiationDetail', require('./routers/appropiationDetails.router.js'))
+
+      .use('/movements', require('./routers/movements.router.js'))
+      .use('/movementDetails', require('./routers/movementDetails.router.js'))
 
     // Configura la carpeta pública para servir archivos estáticos
     // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
