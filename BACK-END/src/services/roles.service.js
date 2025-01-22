@@ -8,6 +8,15 @@ const getAllRoles = async () => {
     }
 };
 
+const getRoleById = async (id) => {
+    try {
+        return await roleRepository.getRoleById(id);
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
-    getAllRoles
+    getAllRoles,
+    getRoleById
 };
