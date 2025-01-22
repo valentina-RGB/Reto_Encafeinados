@@ -1,35 +1,39 @@
-CREATE DATABASE encafeinados_prueba;
-USE encafeinados_prueba;
+CREATE DATABASE encafeinados;
+USE encafeinados;
 
+-- Tabla para gestionar los roles de la tienda (Tienda, Proveedor)
 CREATE TABLE roles (
     idRol INT AUTO_INCREMENT PRIMARY KEY,
     nombreRol VARCHAR(50) NOT NULL UNIQUE,
     estadoRol TINYINT(1) NOT NULL DEFAULT true,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Tabla para gestionar los usuarios que pueden acceder al aplicativo
 CREATE TABLE usuarios (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
     idRol INT,
     correoUsuario VARCHAR(50) NOT NULL UNIQUE,
     claveUsuario VARCHAR(255) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idRol) REFERENCES roles(idRol)
 );
 
+-- Tabla para gestionar las diferentes teindas que utilizarán el aplicativo
 CREATE TABLE tiendas (
     idTienda INT AUTO_INCREMENT PRIMARY KEY,
     idUsuario INT UNIQUE,
     nombreTienda VARCHAR(100) NOT NULL,
     telefonoTienda VARCHAR (12) NOT NULL,
     direccionTienda VARCHAR(200) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) 
     );
 
+-- Para gestionar los proveedores de la tienda
 CREATE TABLE proveedores (
     idProveedor INT AUTO_INCREMENT PRIMARY KEY,
     idUsuario INT UNIQUE,
@@ -40,10 +44,11 @@ CREATE TABLE proveedores (
     tipoCuenta VARCHAR(20),
     numeroCuenta VARCHAR(20) UNIQUE,
     estadoProveedor TINYINT(1) NOT NULL DEFAULT true,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario) );
 
+-- Para gestionar el producto base (ejemplo: Café Santa Barbara)
 CREATE TABLE productos (
     idProducto INT AUTO_INCREMENT PRIMARY KEY,
     nombreProducto VARCHAR(100) NOT NULL,
@@ -51,11 +56,12 @@ CREATE TABLE productos (
     categoria ENUM('Grano', 'Molido', 'Cápsula'),
     origen VARCHAR(255),
     nivelTostion VARCHAR(50), -- Claro, medio, oscuro
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     estadoProducto TINYINT(1) NOT NULL DEFAULT true
 );
 
+-- Para gestionar el perfil sensorial de cada café
 CREATE TABLE perfilSensorial (
     idPerfilSensorial INT AUTO_INCREMENT PRIMARY KEY,
     idProducto INT,
@@ -66,25 +72,28 @@ CREATE TABLE perfilSensorial (
     FOREIGN KEY (idProducto) REFERENCES productos(idProducto) ON DELETE CASCADE
 );
 
+-- Para administrar los tipos de café (Sta Barbara 250g o Sta Barbara 500g)
 CREATE TABLE varianteProducto (
     idVariante INT AUTO_INCREMENT PRIMARY KEY,
     idProducto INT,
     gramaje INT NOT NULL,
     estadoVariante TINYINT(1) NOT NULL DEFAULT true,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idProducto) REFERENCES productos(idProducto) );
 
+-- Gestiona las entradas de los productos al aplicativo
 CREATE TABLE consignaciones (
     idConsignacion INT AUTO_INCREMENT PRIMARY KEY,
     idProveedor INT,
     fechaIngreso DATETIME DEFAULT CURRENT_TIMESTAMP,
     fechaDevolucion DATE,
     estadoConsignacion ENUM('ACTIVA', 'FINALIZADA', 'DEVUELTA') NOT NULL DEFAULT 'ACTIVA',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idProveedor) REFERENCES proveedores(idProveedor) );
 
+-- Gestiona la entrada especifica de cada producto
 CREATE TABLE detalleConsignacion (
     idDetalleConsignacion INT AUTO_INCREMENT PRIMARY KEY,
     idConsignacion INT,
@@ -109,15 +118,17 @@ CREATE TABLE detalleConsignacion (
     CONSTRAINT chk_cantidad_devuelta_valida CHECK (cantidadDevuelta <= cantidadRecibida - cantidadVendida)
 );
 
+-- Administra las salidas de los productos (Devolución, Venta o Ajuste)
 CREATE TABLE movimientos (
     idMovimiento INT AUTO_INCREMENT PRIMARY KEY,
     tipoMovimiento ENUM('Venta', 'Devolución', 'Ajuste') NOT NULL,
     fechaMovimiento DATE,
     estadoMovimiento TINYINT DEFAULT true,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Se especifica cada producto que sale
 CREATE TABLE detalleMovimiento (
     idDetalleMovimiento INT AUTO_INCREMENT PRIMARY KEY,
     idMovimiento INT NOT NULL,
@@ -131,14 +142,16 @@ CREATE TABLE detalleMovimiento (
     CONSTRAINT chk_cantidad_mov_positiva CHECK (cantidad > 0)
 );
 
+-- Tabla para visualizar el estado de pago del proveedor
 CREATE TABLE liquidacionProveedor (
     idLiquidacion INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idConsignacion INT,
     estadoLiquidacion ENUM('PENDIENTE', 'PAGADA') NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idConsignacion) REFERENCES consignaciones(idConsignacion) );
 
+-- Tabla para realizar los pagos al proveedor
 CREATE TABLE abonoProveedor (
     idAbono INT AUTO_INCREMENT PRIMARY KEY,
     idLiquidacionProveedor INT,
@@ -146,13 +159,13 @@ CREATE TABLE abonoProveedor (
     monto DECIMAL(10, 2) NOT NULL,
     metodoPago ENUM('EFECTIVO', 'TRANSFERENCIA') NOT NULL,
     referencia VARCHAR(100),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (idLiquidacionProveedor) REFERENCES liquidacionProveedor(idLiquidacion),
     CONSTRAINT chk_monto_positivo CHECK (monto > 0)
 );
 
--- TRIGGERS --
+	-- -------------------------------------- TRIGGERS -------------------------------------- --
 
 -- Trigger para calcular el total del detalle del movimiento
 DELIMITER //
@@ -170,12 +183,18 @@ BEGIN
     FROM movimientos 
     WHERE idMovimiento = NEW.idMovimiento;
     
-    -- Solo calcular precios y total si es una venta
-    IF v_tipo_movimiento = 'Venta' THEN
+    -- Calcular precios y total si es una venta o un ajuste
+    IF v_tipo_movimiento IN ('Venta', 'Ajuste') THEN
         SELECT 
             precioCompra,
-            precioVenta,
-            (NEW.cantidad * precioVenta)
+            CASE 
+                WHEN v_tipo_movimiento = 'Ajuste' THEN precioCompra -- Para ajustes, usamos el precio de compra como precio de venta
+                ELSE precioVenta
+            END,
+            CASE 
+                WHEN v_tipo_movimiento = 'Ajuste' THEN NEW.cantidad * precioCompra -- Para ajustes, el total es cantidad * precio de compra
+                ELSE NEW.cantidad * precioVenta
+            END
         INTO 
             v_precio_unitario,
             v_precio_venta,
@@ -194,7 +213,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Trigger para validar la fecha de tostión
+-- Trigger para validar la fecha de tostión --
 DELIMITER //
 CREATE TRIGGER validar_fecha_tostion
 BEFORE INSERT ON detalleConsignacion
@@ -208,18 +227,23 @@ END;
 //
 DELIMITER ;
 
--- Trigger para actualizar cantidades vendidas/devueltas
+-- Trigger para actualizar cantidades vendidas/ajustadas o devueltas --
 DELIMITER //
-
 CREATE TRIGGER actualizar_cantidades_consignacion
 AFTER INSERT ON detalleMovimiento
 FOR EACH ROW
 BEGIN
-    IF (SELECT tipoMovimiento FROM movimientos WHERE idMovimiento = NEW.idMovimiento) = 'Venta' THEN
+    DECLARE v_tipo_movimiento VARCHAR(20);
+    
+    SELECT tipoMovimiento INTO v_tipo_movimiento
+    FROM movimientos 
+    WHERE idMovimiento = NEW.idMovimiento;
+    
+    IF v_tipo_movimiento = 'Venta' OR v_tipo_movimiento = 'Ajuste' THEN
         UPDATE detalleConsignacion
         SET cantidadVendida = cantidadVendida + NEW.cantidad
         WHERE idDetalleConsignacion = NEW.idDetalleConsignacion;
-    ELSEIF (SELECT tipoMovimiento FROM movimientos WHERE idMovimiento = NEW.idMovimiento) = 'Devolución' THEN
+    ELSEIF v_tipo_movimiento = 'Devolución' THEN
         UPDATE detalleConsignacion
         SET cantidadDevuelta = cantidadDevuelta + NEW.cantidad
         WHERE idDetalleConsignacion = NEW.idDetalleConsignacion;
@@ -228,7 +252,7 @@ END;
 //
 DELIMITER ;
 
--- Trigger para validar que no se exceda la cantidad disponible
+-- Trigger para validar que no se exceda la cantidad disponible --
 
 DELIMITER //
 CREATE TRIGGER validar_cantidad_disponible
@@ -236,7 +260,7 @@ BEFORE INSERT ON detalleMovimiento
 FOR EACH ROW
 BEGIN
     DECLARE cantidad_disponible INT;
-    DECLARE tipo_movimiento VARCHAR(20); -- Asegúrate de que el tipo coincida con el ENUM en la tabla `movimientos`.
+    DECLARE tipo_movimiento VARCHAR(20);
 
     -- Obtener el tipo de movimiento desde la tabla `movimientos`
     SELECT tipoMovimiento INTO tipo_movimiento
@@ -258,6 +282,7 @@ END;
 //
 DELIMITER ;
 
+-- Trigger para actualizar el estado de pago a proveedor --
 DELIMITER //
 CREATE TRIGGER actualizar_estado_liquidacion
 AFTER INSERT ON abonoProveedor
@@ -293,7 +318,10 @@ END;
 //
 DELIMITER ;
 
--- VISTAS --
+-- -------------------------------------- VISTAS -------------------------------------- --
+
+-- Muestra el total de los abonos hechos a un porvveedor y el saldo pendiente
+
 CREATE VIEW vista_liquidaciones AS
 SELECT 
     l.idLiquidacion,
@@ -310,8 +338,8 @@ SELECT
       FROM abonoProveedor p 
       WHERE p.idLiquidacionProveedor = l.idLiquidacion)) AS Saldo_Pendiente,
     l.estadoLiquidacion,
-    l.created_at,
-    l.updated_at
+    l.createdAt,
+    l.updatedAt
 FROM liquidacionProveedor l
 LEFT JOIN detalleConsignacion dc ON dc.idConsignacion = l.idConsignacion
-GROUP BY l.idLiquidacion, l.idConsignacion, l.estadoLiquidacion, l.created_at, l.updated_at;
+GROUP BY l.idLiquidacion, l.idConsignacion, l.estadoLiquidacion, l.createdAt, l.updatedAt;

@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idRol: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'roles',
         key: 'idRol'

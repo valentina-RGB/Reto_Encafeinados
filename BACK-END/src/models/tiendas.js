@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         model: 'usuarios',
         key: 'idUsuario'
       },
-      unique: "tiendas_ibfk_2"
+      unique: "tiendas_ibfk_1"
     },
     nombreTienda: {
       type: DataTypes.STRING(100),

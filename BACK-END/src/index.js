@@ -3,7 +3,6 @@ const path = require("path");
 const { Sequelize } = require('sequelize');
 // const Sequelize = require('sequelize');
 const express = require('express');
-const {db, sequelize} = require('./models')
 const { connectToDatabase} = require('./config/db');
 
 const dotenv = require('dotenv');
@@ -43,8 +42,8 @@ class Server {
 
       // Sincronizar los modelos con la base de datos
       
-      // await sequelize.sync({ force: true });
-      await sequelize.sync({ alter: true });
+     // await sequelize.sync({ force: true });
+     // await sequelize.sync({ alter: true });
 
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
