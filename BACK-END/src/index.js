@@ -1,11 +1,11 @@
 const cors = require('cors');
 const path = require("path");
-const { Sequelize } = require('sequelize');
-// const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
 const express = require('express');
+
+const { sequelize } = require('./models/index.js');
 const { connectToDatabase} = require('./config/db');
 
-const dotenv = require('dotenv');
 dotenv.config();
 
 class Server {
@@ -38,17 +38,12 @@ class Server {
   syncDataBase = async () => {
     try {
            
-      // Sincronizar los modelos con la base de datos
-      // await sequelize.sync({ alter: true });
-
-
-    // Conectar a la base de datos
-    await connectToDatabase();
+      // Conectar a la base de datos
+      await connectToDatabase();
 
       // Sincronizar los modelos con la base de datos
-      
-     // await sequelize.sync({ force: true });
-     // await sequelize.sync({ alter: true });
+      // await sequelize.sync({ force: true }); // -> Borra y crea las tablas (también elimina los datos)
+      // await sequelize.sync({ alter: true }); // -> Actualiza las tablas
 
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
@@ -57,10 +52,11 @@ class Server {
 
   routers() {
 
-    this.app.use('/roles', require('./routers/roles.router.js'));
+    this.app
+      .use('/roles', require('./routers/roles.router.js'))
 
     // Configura la carpeta pública para servir archivos estáticos
-    // this.app.use("/imagenes", express.static(path.join(__dirname, "../uploads")))
+    // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
   };
 
   listen() {
