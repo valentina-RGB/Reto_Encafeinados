@@ -25,7 +25,7 @@ class Server {
     //Rutas
     this.routers();
 
-    //sincronizar base de datos
+    //Base de Datos
     this.syncDataBase();
   }
 
@@ -57,9 +57,6 @@ class Server {
   };
 
   routers() {
-    this.app
-    this.app
-
     this.app
     // Configura la carpeta pública para servir archivos estáticos
       // .use("/imagenes", express.static(path.join(__dirname, "../uploads")))
