@@ -1,25 +1,28 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('roles', {
-    idRol: {
+  return sequelize.define('movimientos', {
+    idMovimiento: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nombreRol: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: "nombreRol"
+    tipoMovimiento: {
+      type: DataTypes.ENUM('Venta','Devolución','Ajuste'),
+      allowNull: false
     },
-    estadoRol: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
+    fechaMovimiento: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    estadoMovimiento: {
+      type: DataTypes.TINYINT,
+      allowNull: true,
       defaultValue: 1
     }
   }, {
     sequelize,
-    tableName: 'roles',
+    tableName: 'movimientos',
     timestamps: true,
     indexes: [
       {
@@ -27,15 +30,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "idRol" },
-        ]
-      },
-      {
-        name: "nombreRol",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "nombreRol" },
+          { name: "idMovimiento" },
         ]
       },
     ]
