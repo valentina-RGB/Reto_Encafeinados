@@ -11,7 +11,13 @@ const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         dialect: process.env.DB_DIALECT,
-        logging: false
+        logging: false,
+        define: {
+            timestamps: true,
+            underscored: false,  // Usa nombres de columna tal cual los defines  
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+          }
     }
 );
 
@@ -43,7 +49,7 @@ const connectToDatabase = async () => {
     try {
         await createDatabaseIfNotExists();
         await sequelize.authenticate();
-        console.log(`\nConexión establecida a la base de datos "${process.env.DB_NAME}" puerto ${process.env.DB_PORT}.`);
+        console.log(`\nConexión establecida a la base de datos "${process.env.DB_NAME}"`);
     } catch (error) {
         console.error('Error de conexión completo:', error);
         console.error('Mensaje de error:', error.message);
