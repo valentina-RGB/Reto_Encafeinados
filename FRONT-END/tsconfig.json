@@ -8,7 +8,7 @@
     "baseUrl": ".",
     "types": ["node"],
     "paths": {
-      "@/components/*": ["./src/views/components/ui/*"],
+      "@/components/*": ["src/components/ui/*"],
       "@/lib/*": ["./src/components/lib/*"]
     }
   }

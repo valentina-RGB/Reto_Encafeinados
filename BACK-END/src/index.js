@@ -3,8 +3,8 @@ const path = require("path");
 const { Sequelize } = require('sequelize');
 const {sequelize} = require('./models');
 const express = require('express');
+const dotenv = require('dotenv');
 
-const { sequelize } = require('./models/index.js');
 const { connectToDatabase} = require('./config/db');
 
 dotenv.config();
