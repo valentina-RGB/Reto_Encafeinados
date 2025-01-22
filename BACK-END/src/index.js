@@ -58,6 +58,7 @@ class Server {
   routers() {
 
     this.app.use('/roles', require('./routers/roles.router.js'));
+    this.app.use('/users', require('./routers/users.router.js'));
 
     // Configura la carpeta pública para servir archivos estáticos
     // this.app.use("/imagenes", express.static(path.join(__dirname, "../uploads")))
