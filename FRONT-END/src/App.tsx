@@ -19,12 +19,12 @@ function App() {
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Login />} />
-        <Route path="/menu" element={<MenuPage />} />
 
         {/* Rutas protegidas */}
 
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
-          
+
+          <Route path="/menu" element={<MenuPage />} />
           <Route path="/user" element={<UserPage />} />
 
           {/* <Route path="productos" element={<Productos />} />
