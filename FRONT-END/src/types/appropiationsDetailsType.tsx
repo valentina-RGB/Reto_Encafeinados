@@ -9,6 +9,6 @@ export interface  appropiationsDetails_type{
     fechaTostion: Date;
     precioCompra: number;
     porcentajeGanancia: number;
-    precioVenta: Date;
+    precioVenta: number;
     subtotal: number;
 }
