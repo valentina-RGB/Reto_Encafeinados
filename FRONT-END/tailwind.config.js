@@ -10,6 +10,9 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			beige: '#f5f5dc', // Beige claro para el fondo general
+			'beige-100': '#faf3e0', // Beige más claro para las tarjetas de contenido
+			'beige-200': '#f0e4c7', // Beige intermedio para el topbar
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
