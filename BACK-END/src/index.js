@@ -61,6 +61,7 @@ class Server {
       .use('/stores', require('./routers/stores.router.js'))
       .use('/suppliers', require('./routers/suppliers.router.js'))
       .use('/deposits', require('./routers/deposits.router.js'))
+      .use('/settlement', require('./routers/settlement.router.js'))
 
       .use('/products', require('./routers/products.router.js'))
       .use('/productVariants', require('./routers/productVariants.router.js'))
