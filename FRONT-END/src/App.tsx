@@ -6,12 +6,15 @@ import 'primeicons/primeicons.css'; // Iconos
 
 import UserPage from './Pages/userPage';
 import Layout from './components/layout/layout';
-import MenuPage from './Pages/menuPage';  // Página de menú
 
 import './App.css'
 import Login from './Pages/loginPrueba';
 import PrivateRoute from './components/privateRoute';
-
+import Product from './Pages/product';
+import SalesPage from './Pages/sales'
+import ShopPage from './Pages/sales'
+import MenuPageSuppliers from './Pages/menuPageSuppliers';
+import MenuPageStore from './Pages/menuPagesStore';
 function App() {
 
   return (
@@ -19,13 +22,18 @@ function App() {
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Login />} />
-
+        <Route path="/product" element={<Product/>}/>
+        <Route path="/sales" element= {<SalesPage/>}/>
+        <Route path= "/shop" element= {<ShopPage/>}/>
+        <Route path="/menuSuppliers" element={<MenuPageSuppliers/>} />
+        <Route path="/menuStore" element={<MenuPageStore/>} />
+        
         {/* Rutas protegidas */}
-
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
 
-          <Route path="/menu" element={<MenuPage />} />
+          
           <Route path="/user" element={<UserPage />} />
+
 
           {/* <Route path="productos" element={<Productos />} />
           <Route path="proveedores" element={<Proveedores />} /> */}
