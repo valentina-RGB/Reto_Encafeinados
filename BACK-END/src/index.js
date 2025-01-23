@@ -3,7 +3,6 @@ const path = require("path");
 const dotenv = require('dotenv');
 
 const express = require('express');
-const dotenv = require('dotenv');
 
 const { connectToDatabase} = require('./config/db');
 
@@ -54,6 +53,8 @@ class Server {
   routers() {
 
     this.app
+      .use('/auth', require('./routers/auth.router.js'))
+      
       .use('/roles', require('./routers/roles.router.js'))
       .use('/users', require('./routers/users.router.js'))
 
