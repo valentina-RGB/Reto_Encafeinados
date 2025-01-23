@@ -1,15 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import Header from "../components/common/header"
+import Header from "../components/common/Header"
 import ProductList from "../components/list/productList"
-import Pagination from "../components/common/pagination"
+import Pagination from "../components/common/Pagination"
 import AddProductModal from "../components/common/AddProductModal"
 
 // import Pagination from "../components/Pagination"
 // import AddProductModal from "../components/AddProductModal"
 
-export default function Home() {
+export default function Products() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false)
 
   const handleAddProduct = (product: any) => {
@@ -50,4 +50,3 @@ export default function Home() {
     </div>
   )
 }
-

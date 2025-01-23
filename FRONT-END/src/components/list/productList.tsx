@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import ProductItem from "./ProductItem"
+import ProductItem from "./productItem"
 
 const initialProducts = [
   {
@@ -43,7 +43,7 @@ const initialProducts = [
 
 export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [products, setProducts] = useState(initialProducts)
+  const [products] = useState(initialProducts)
 
   const filteredProducts = products
     .filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()))

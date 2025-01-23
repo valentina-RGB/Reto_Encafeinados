@@ -1,17 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
-import Modal from "./Modal"
+// import Image from "next/image"
+import Modal from "../../components/common/Modal"
+
 
 interface ProductItemProps {
   name: string
   description: string
-  image: string
   price: number
 }
 
-export default function ProductItem({ name, description, image, price }: ProductItemProps) {
+export default function ProductItem({ name, description, price }: ProductItemProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [profitPercentage, setProfitPercentage] = useState("")
   const [finalPrice, setFinalPrice] = useState(0)
@@ -33,7 +33,7 @@ export default function ProductItem({ name, description, image, price }: Product
       <div className="flex items-center gap-4">
         <div
           className="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-24"
-          style={{ backgroundImage: `url("${image}")` }}
+          // style={{ backgroundImage: `url("${image}")` }}
         ></div>
         <div className="flex flex-col justify-center">
           <p className="text-[#1b130d] text-lg font-medium leading-normal line-clamp-1">{name}</p>
