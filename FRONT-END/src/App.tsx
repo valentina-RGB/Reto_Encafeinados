@@ -6,6 +6,7 @@ import 'primeicons/primeicons.css'; // Iconos
 
 import UserPage from './Pages/userPage';
 import Layout from './components/layout/layout';
+import MenuPage from './Pages/menuPage';  // Página de menú
 
 import './App.css'
 import Login from './Pages/loginPrueba';
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Login />} />
+        <Route path="/menu" element={<MenuPage />} />
 
         {/* Rutas protegidas */}
 
