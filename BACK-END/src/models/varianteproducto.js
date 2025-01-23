@@ -15,6 +15,10 @@ module.exports = function(sequelize, DataTypes) {
         key: 'idProducto'
       }
     },
+    imagenVariante: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
     gramaje: {
       type: DataTypes.INTEGER,
       allowNull: false

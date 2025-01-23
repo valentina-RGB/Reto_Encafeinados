@@ -30,8 +30,6 @@ function initModels(sequelize) {
 
   detalleconsignacion.belongsTo(consignaciones, { as: "idConsignacion_consignacione", foreignKey: "idConsignacion"});
   consignaciones.hasMany(detalleconsignacion, { as: "detalleconsignacions", foreignKey: "idConsignacion"});
-  liquidacionproveedor.belongsTo(consignaciones, { as: "idConsignacion_consignacione", foreignKey: "idConsignacion"});
-  consignaciones.hasMany(liquidacionproveedor, { as: "liquidacionproveedors", foreignKey: "idConsignacion"});
   detallemovimiento.belongsTo(detalleconsignacion, { as: "idDetalleConsignacion_detalleconsignacion", foreignKey: "idDetalleConsignacion"});
   detalleconsignacion.hasMany(detallemovimiento, { as: "detallemovimientos", foreignKey: "idDetalleConsignacion"});
   abonoproveedor.belongsTo(liquidacionproveedor, { as: "idLiquidacionProveedor_liquidacionproveedor", foreignKey: "idLiquidacionProveedor"});
@@ -44,6 +42,8 @@ function initModels(sequelize) {
   productos.hasMany(varianteproducto, { as: "varianteproductos", foreignKey: "idProducto"});
   consignaciones.belongsTo(proveedores, { as: "idProveedor_proveedore", foreignKey: "idProveedor"});
   proveedores.hasMany(consignaciones, { as: "consignaciones", foreignKey: "idProveedor"});
+  liquidacionproveedor.belongsTo(proveedores, { as: "idProveedor_proveedore", foreignKey: "idProveedor"});
+  proveedores.hasMany(liquidacionproveedor, { as: "liquidacionproveedors", foreignKey: "idProveedor"});
   usuarios.belongsTo(roles, { as: "idRol_role", foreignKey: "idRol"});
   roles.hasMany(usuarios, { as: "usuarios", foreignKey: "idRol"});
   proveedores.belongsTo(usuarios, { as: "idUsuario_usuario", foreignKey: "idUsuario"});

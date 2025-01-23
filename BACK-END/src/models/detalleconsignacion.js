@@ -72,16 +72,17 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idConsignacion",
-        using: "BTREE",
-        fields: [
-          { name: "idConsignacion" },
-        ]
-      },
-      {
         name: "idVarianteProducto",
         using: "BTREE",
         fields: [
+          { name: "idVarianteProducto" },
+        ]
+      },
+      {
+        name: "idx_consignacion_variante",
+        using: "BTREE",
+        fields: [
+          { name: "idConsignacion" },
           { name: "idVarianteProducto" },
         ]
       },
