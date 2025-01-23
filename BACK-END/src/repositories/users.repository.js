@@ -20,6 +20,15 @@ const deleteUser = async (id) => {
     return await usuarios.destroy({ where: { idUsuario : id } });
 };
 
+const findUserByEmail = async (email) => {
+    return await usuarios.findOne({ where: { correoUsuario: email } });
+};
+
 module.exports = {
-    getAllUsers
+    getAllUsers,
+    getOneUser,
+    createUser,
+    updateUser,
+    deleteUser,
+    findUserByEmail
 };

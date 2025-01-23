@@ -1,23 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './App.css'
-// import FormularioPaginado from './views/Partials/appropriations/form_details'
-// import RolPage from './Pages/rolesPage'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { PrimeReactProvider } from 'primereact/api';
-import LoginPage from './Pages/loginPage'
+
+import App from './App.tsx';
+
 import 'primereact/resources/themes/lara-light-indigo/theme.css'; // Tema de PrimeReact
 import 'primereact/resources/primereact.min.css'; // Estilos principales de PrimeReact
 import 'primeicons/primeicons.css'; // Íconos de PrimeIcons
 import 'primeflex/primeflex.css'; // Utilidades de PrimeFlex
-// import UserPage from './Pages/userPage';
-
-
-// import App from './App.tsx'
+import './App.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <PrimeReactProvider>
-    <LoginPage/>
-    </PrimeReactProvider>
-  </StrictMode>,
-)
+    <Router>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+    </Router>
+  </StrictMode>
+);

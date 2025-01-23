@@ -53,7 +53,7 @@ class Server {
   routers() {
 
     this.app
-      .use('/auth', require('./routers/auth.router.js'))
+      .use('/login', require('./routers/auth.router.js'))
       
       .use('/roles', require('./routers/roles.router.js'))
       .use('/users', require('./routers/users.router.js'))
