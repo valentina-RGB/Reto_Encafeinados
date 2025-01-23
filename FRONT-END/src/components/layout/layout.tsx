@@ -1,46 +1,55 @@
-import { Outlet, Link } from "react-router-dom";
+import { Button } from "primereact/button";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white flex flex-col">
-        <div className="p-4 text-lg font-bold">Encafeinados</div>
-        <nav className="flex-grow">
-          <ul className="space-y-2 p-4">
-            <li>
-              <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-700 rounded">
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link to="/productos" className="block px-4 py-2 hover:bg-gray-700 rounded">
-                Productos
-              </Link>
-            </li>
-            <li>
-              <Link to="/proveedores" className="block px-4 py-2 hover:bg-gray-700 rounded">
-                Proveedores
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="p-4">
-          <button
-            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
-            onClick={() => {
-              localStorage.removeItem("token");
-              window.location.href = "/";
-            }}
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      </aside>
+  const navigate = useNavigate();
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
 
-      {/* Main content */}
-      <main className="flex-grow bg-gray-100 p-6">
-        <Outlet /> {/* Aquí se renderizan las páginas */}
+  return (
+    <div className="h-screen flex flex-col bg-[#F5F5F5]">
+      {/* Topbar */}
+      <header className="fixed top-2 left-2 right-2 h-14 bg-[#6F4E37] text-white shadow-md flex items-center justify-between px-4 z-50 rounded-lg">
+        {/* Botón de regresar */}
+        <Button 
+          icon="pi pi-arrow-left" 
+          className="p-button-text text-white hover:bg-[#D2691E]" 
+          onClick={() => navigate(-1)} 
+        />
+        
+        {/* Logo */}
+        <h4>Encafeinados</h4>
+        {/* <img 
+          src="/logo-name.JPG" 
+          alt="Encafeinados" 
+          className="h-8 object-contain" 
+        /> */}
+        
+        {/* Botones de usuario y cerrar sesión */}
+        <div className="flex items-center gap-4">
+          <Button 
+            icon="pi pi-user" 
+            className="p-button-text text-white hover:bg-[#D2691E]" 
+            onClick={() => console.log("Abrir perfil")} 
+          />
+          <Button 
+            icon="pi pi-sign-out" 
+            className="p-button-text text-white hover:bg-[#F4A460]" 
+            onClick={handleLogout} 
+          />
+        </div>
+      </header>
+      
+      {/* Main Content */}
+      <main className="mt-20 mb-2 mx-2 flex-1 overflow-y-auto">
+        <div className="p-4 bg-white border-[#6F4E37] border rounded-lg shadow-md h-full">
+          {/* Contenido principal */}
+          <Outlet />
+        </div>
       </main>
     </div>
   );
