@@ -146,3 +146,5 @@ dist
 *.sln
 *.sw?
 APIV1/config/config.json
+
+.env
