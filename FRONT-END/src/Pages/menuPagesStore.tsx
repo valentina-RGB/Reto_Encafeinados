@@ -5,28 +5,28 @@ const menuItems = [
   {
     title: "Productos",
     description: "Gestionar inventario y precios",
-    icon: "pi pi-box", // Icono de productos
+    icon: "pi pi-box", 
   },
   {
     title: "Consignaciones",
     description: "Registrar Consignaciones",
-    icon: "pi pi-dollar", // Icono de dinero
+    icon: "pi pi-dollar", 
   },
   {
     title: "Balance de Ventas",
     description: "Ver el Balance de Ventas",
-    icon: "pi pi-chart-bar", // Icono de gráfico
+    icon: "pi pi-chart-bar",
   },
 ];
 
-export default function MenuPage() {
+export default function MenuPageStore() {
   return (
-    <div className="min-h-screen bg-[#f5f4f4] font-sans">
+    <div className="min-h-screen bg-[#f5f4f4] font-sans flex items-center justify-center">
       <div className="mx-auto max-w-[960px] px-4 py-5">
         {/* Encabezado */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-black tracking-tight text-[#151314]">Bienvenido a ComerciPlus</h1>
-          <p className="mt-2 text-base text-[#766b6c]">Selecciona una opción para comenzar</p>
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-black tracking-tight text-[#151313]">Bienvenido tienda "" a Encafeinados</h1>
+          <p className="mt-2 text-base text-[#766b6c]">¿Qué quieres hacer hoy?</p>
         </div>
 
         {/* Grid de opciones */}
@@ -34,7 +34,7 @@ export default function MenuPage() {
           {menuItems.map((item) => (
             <Card
               key={item.title}
-              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-white"
+              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-orange-500" 
             >
               {/* Icono */}
               <div className="text-[#151314]">
@@ -50,7 +50,7 @@ export default function MenuPage() {
               {/* Botón de acción */}
               <Button
                 label="Seleccionar"
-                className="p-button-rounded p-button-outlined mt-2"
+                className="p-button-rounded p-button-outline mt-2"
                 icon="pi pi-chevron-right"
                 style={{ width: "fit-content", alignSelf: "center" }}
               />
