@@ -6,6 +6,7 @@ type CrudMethods<T> = {
   getById: (id: string | number) => Promise<T>;
   create: (data: T) => Promise<T>;
   update: (id: string | number, data: Partial<T>) => Promise<T>;
+  login: (data: any) => Promise<T>;
   remove: (id: string | number) => Promise<void>;
 };
 
@@ -91,5 +92,19 @@ export const useCRUD = <T>(endpoint: string): CrudMethods<T> => {
     }
   };
 
-  return { getAll, getById, create, update, remove };
+  const login = async (data: any): Promise<T> => {
+    try {
+      const response = await client.post(endpoint, data);
+      return response.data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
+      throw err;
+    }
+  };  
+
+  return { login, getAll, getById, create, update, remove };
 };

@@ -53,13 +53,15 @@ class Server {
   routers() {
 
     this.app
-      .use('/auth', require('./routers/auth.router.js'))
+      .use('/login', require('./routers/auth.router.js'))
       
       .use('/roles', require('./routers/roles.router.js'))
       .use('/users', require('./routers/users.router.js'))
 
       .use('/stores', require('./routers/stores.router.js'))
       .use('/suppliers', require('./routers/suppliers.router.js'))
+      .use('/deposits', require('./routers/deposits.router.js'))
+      .use('/settlement', require('./routers/settlement.router.js'))
 
       .use('/products', require('./routers/products.router.js'))
       .use('/productVariants', require('./routers/productVariants.router.js'))

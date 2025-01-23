@@ -1,4 +1,6 @@
 export const API_ENDPOINTS = {
+    LOGIN: '/login',
+
     ROLES: '/roles',
     USERS: '/users',
     STORES: '/stores',
@@ -9,5 +11,5 @@ export const API_ENDPOINTS = {
     APPROPIATION: '/appropiation',
     APPROPIATIONDETAILS: '/appropiationDetails',
     MOVEMENTS:'/movements',
-    MOVEMENTDETAILS:'/movementDetails'
+    MOVEMENTDETAILS:'/movementDetails',
   };
