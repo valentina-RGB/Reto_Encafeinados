@@ -16,7 +16,34 @@ const getOneAppropiation = async (id) => {
     }
 };
 
+const createAppropiation = async (appropiation) => {
+    try {
+        return await appropiationRepository.createAppropiation(appropiation);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const updateAppropiation = async (id, appropiation) => {
+    try {
+        return await appropiationRepository.updateAppropiation(id, appropiation);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const deleteAppropiation = async (id) => {
+    try {
+        return await appropiationRepository.deleteAppropiation(id);
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     getAllAppropiations,
-    getOneAppropiation
+    getOneAppropiation,
+    createAppropiation,
+    updateAppropiation,
+    deleteAppropiation
 };

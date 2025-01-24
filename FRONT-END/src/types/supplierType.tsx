@@ -1,5 +1,4 @@
 export interface supplierType{
-    idProveedor:number;
     nombreProveedor: string;
     correoProveedor: string;
     telefonoProveedor: string;

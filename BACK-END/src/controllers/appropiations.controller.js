@@ -19,7 +19,41 @@ const getOneAppropiation = async (req, res) => {
     }
 };
 
+const createAppropiation = async (req, res) => {
+    try {
+        const appropiation = req.body;
+        const newAppropiation = await appropiationService.createAppropiation(appropiation);
+        res.status(201).json(newAppropiation);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const updateAppropiation = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const appropiation = req.body;
+        await appropiationService.updateAppropiation(id, appropiation);
+        res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const deleteAppropiation = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await appropiationService.deleteAppropiation(id);
+        res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getAllAppropiations,
-    getOneAppropiation
+    getOneAppropiation,
+    createAppropiation,
+    updateAppropiation,
+    deleteAppropiation
 };
