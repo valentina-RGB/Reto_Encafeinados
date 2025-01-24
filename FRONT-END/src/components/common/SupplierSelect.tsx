@@ -61,7 +61,7 @@ export function SupplierSelect({
               {data.map((supplier: supplierType) => (
                 <CommandItem
                   key={supplier.idProveedor}
-                  value={supplier.idProveedor.toString()}
+                  value={supplier.nombreProveedor}
                   onSelect={(currentValue) => {
                     setvalue(currentValue === value ? "" : currentValue)
                     setOpen(false)
