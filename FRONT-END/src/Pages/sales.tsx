@@ -5,8 +5,8 @@ import Header from "../components/common/Header"
 import ProductList from "../components/list/ProductListSales"
 import Cart from "../components/common/Cart"
 import { SupplierSelect } from "../components/common/SupplierSelect"
-import { useSupplierService } from "../api/services/supplier"
-import { supplierType } from "../types"
+// import { useSupplierService } from "../api/services/supplier"
+// import { supplierType } from "../types"
 import { productType } from "../types"
 import { useProductService } from "../api/services/productServices"
 // interface CoffeeItem {
@@ -19,6 +19,7 @@ import { useProductService } from "../api/services/productServices"
 // }
 
 interface CartItem extends productType {
+  idProducto: number
   cantidad: number
 }
 
@@ -41,15 +42,15 @@ export default function ShopPage() {
     }
   }
 
-  const addToCart = (item: productType, quantity: number) => {
+  const addToCart = (item: productType, cantidad: number) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((cartItem) => cartItem.idProducto === item.idProducto)
       if (existingItem) {
         return prevItems.map((cartItem) =>
-          cartItem.idProducto === item.idProducto? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem,
+          cartItem.idProducto === item.idProducto? { ...cartItem, cantidad:cartItem.cantidad + cantidad } : cartItem,
         )
       } else {
-        return [...prevItems, { ...item, quantity }]
+        return [...prevItems, { ...item, cantidad }]
       }
     })
   }

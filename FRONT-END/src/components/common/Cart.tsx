@@ -18,7 +18,7 @@ interface CartProps {
 
 export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart }: CartProps) {
   // const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
+  console.log('CARTIEMS',cartItems)
   return (
     <div className="layout-content-container flex flex-col w-[500px]">
       <div className="flex flex-wrap justify-between gap-3 mb-4">
@@ -50,7 +50,7 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
                 <div className="flex items-center gap-2 text-[#181411]">
                   <button
                     className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f4f2f0] cursor-pointer"
-                    onClick={() => updateCartItemQuantity(item.idProducto, item.cantidad - 1)}
+                    onClick={() => updateCartItemQuantity(item.idProducto, item.idProducto - 1)}
                   >
                     -
                   </button>
@@ -72,7 +72,7 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
                   onClick={() => removeFromCart(item.idProducto)}
                   className="text-[#e68019] px-4 py-2 rounded-xl text-sm font-bold"
                 >
-                  Remove
+                 Eliminar
                 </button>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
           </div>
           <div className="flex">
             <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#e68019] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-              <span className="truncate">Checkout</span>
+              <span className="truncate">Registrar</span>
             </button>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
       <div className="flex mt-4">
         <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f4f2f0] text-[#181411] gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
           <ArrowLeft size={20} />
-          <span className="truncate">Continue Shopping</span>
+          <span className="truncate">Volver al home</span>
         </button>
       </div>
     </div>

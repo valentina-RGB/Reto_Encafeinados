@@ -22,14 +22,27 @@ export default function ProductList({ coffeeItems, searchCoffee, setSearchCoffee
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({})
 
   const updateQuantity = (itemId: number, newQuantity: number) => {
-    setQuantities((prev) => ({ ...prev, [itemId]: Math.max(1, newQuantity) }))
-  }
+    // const existencia = coffeeItems.find((item) => item.idProducto === itemId)?.cantidad;
 
+    // setQuantities((prevItems) =>
+    //   prevItems.map((item) => (item.idProducto === itemId ? { ...item, cantidad: newQuantity } : item))
+    // )
+  
+      setQuantities((prev) => ({
+        ...prev,
+        [itemId]: newQuantity // Limita entre 1 y la cantidad disponible
+      }));
+    
+    console.log(quantities, coffeeItems);
+  };
+  
   const handleAddToCart = (item: productType) => {
-    const quantity = quantities[item.cantidad] || 1
-    addToCart(item, quantity)
-    setQuantities((prev) => ({ ...prev, [item.cantidad]: 1 }))
-  }
+    const quantity = quantities[item.idProducto] || 1; // Usa el idProducto para acceder a la cantidad
+    console.log('hola', quantity)
+    
+    addToCart(item, quantity);
+    setQuantities((prev) => ({ ...prev, [item.idProducto]: 1 })); // Reinicia la cantidad a 1 después de añadir al carrito
+  };
 
   return (
     <div className="layout-content-container flex flex-col w-full">
@@ -74,20 +87,20 @@ export default function ProductList({ coffeeItems, searchCoffee, setSearchCoffee
               <div className="flex items-center gap-2 text-[#181411]">
                 <button
                   className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f4f2f0] cursor-pointer"
-                  onClick={() => updateQuantity(item.idProducto, (quantities[item.cantidad] || 1) - 1)}
+                  onClick={() => updateQuantity(item.idProducto, (quantities[item.idProducto] || 1) - 1)}
                 >
                   -
                 </button>
                 <input
                   className="text-base font-medium leading-normal w-8 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   type="number"
-                  value={quantities[item.cantidad] || 1}
+                  value={quantities[item.idProducto] || 1}
                   onChange={(e) => updateQuantity(item.idProducto, Number.parseInt(e.target.value) || 1)}
                   min="1"
                 />
                 <button
                   className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f4f2f0] cursor-pointer"
-                  onClick={() => updateQuantity(item.idProducto, (quantities[item.cantidad] || 1) + 1)}
+                  onClick={() => updateQuantity(item.idProducto, (quantities[item.idProducto] || 1) + 1)}
                 >
                   +
                 </button>
