@@ -8,7 +8,7 @@ import UserPage from './Pages/userPage';
 import Layout from './components/layout/layout';
 
 import './App.css'
-import Login from './Pages/loginPrueba';
+import Login from './Pages/loginPage';
 import PrivateRoute from './components/privateRoute';
 import Product from './Pages/product';
 import SalesPage from './Pages/sales'
@@ -16,7 +16,7 @@ import ShopPage from './Pages/sales'
 import { SuppliersPage } from './Pages/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
-import LoginPage from './Pages/loginPage';
+import LoginPage from './Pages/loginVale';
 function App() {
 
   return (
