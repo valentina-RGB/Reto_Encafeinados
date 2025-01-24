@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Modal from "./Modal";
-// import { useProductService } from "../../api/services/productServices";
+import { useProductService } from "../../api/services/productServices";
 
 
 // import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -29,6 +29,8 @@ export default function AddProductModal({
     origen: "",
     nivelTostion: "",
   });
+
+  const { create} = useProductService();
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -58,6 +60,22 @@ export default function AddProductModal({
 
     onAddProduct(productData);
     console.log(productData);
+
+    if(!productData) {
+      alert("Llena todos los datos")
+    }
+    const data = {
+      idProducto: 0,
+      nombreProducto: productData.nombreProducto,
+      imagenProducto: productData.imagenProducto || null,
+      categoria: productData.categoria ,
+      origen: productData.origen,
+      nivelTostion: productData.nivelTostion,
+      estadoProducto: true
+    }
+    const response = create(data)
+    console.log(response)
+
     onClose();
   };
 

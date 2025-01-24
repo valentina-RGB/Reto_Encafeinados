@@ -15,7 +15,8 @@ import { useProductVariantService } from "../../api/services/productVariantServi
 export default function ProductItem({
   nombreProducto,
   imagenProducto,
-  estadoProducto
+  estadoProducto,
+  idProducto
 }: productType) {
 
   const { create } = useProductVariantService();
@@ -54,7 +55,7 @@ export default function ProductItem({
     if (formData.gramaje) {
       const data = {
         idVariante: 0,
-        idProducto: 1,
+        idProducto: idProducto,
         gramaje: formData.gramaje,
         estadoVariante: true,
         imagenVariante: formData.imagenVariante || null,

@@ -5,7 +5,7 @@ export const API_ENDPOINTS = {
     USERS: '/users',
     STORES: '/stores',
     SUPPLIER: '/suppliers',
-    PRODUCTS: '/products',
+    PRODUCTS: '/products/products',
     PRODUCTVARIANTS: '/productVariants',
     SENSORYPROFILE: '/sensoryProfile',
     APPROPIATION: '/appropiation',
