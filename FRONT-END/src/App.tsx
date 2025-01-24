@@ -17,6 +17,8 @@ import { SuppliersPage } from './Pages/suppliers/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
 import LoginPage from './Pages/loginVale';
+import SuppliersViewPage from './Pages/suppliersViewPage';
+
 function App() {
 
   return (
@@ -51,4 +53,4 @@ function App() {
 
 }
 
-export default App
+export default App
