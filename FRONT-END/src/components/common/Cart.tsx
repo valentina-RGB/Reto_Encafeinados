@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { productType, productVariant_Interface } from "../../types";
 import { Button } from "../ui/button";
+import { useEffect } from "react";
 
 // interface CartItem {
 //   id: string
@@ -16,7 +17,9 @@ interface CartProps {
   cartItems: productVariant_Interface[];
   updateCartItemQuantity: (id: number, newQuantity: number) => void;
   removeFromCart: (id: number) => void;
+  
   DataProduct: productType[];
+ 
 }
 
 export default function Cart({
@@ -24,12 +27,37 @@ export default function Cart({
   DataProduct,
   updateCartItemQuantity,
   removeFromCart,
+
 }: CartProps) {
   // const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   // const handleSubmit = (data: productVariant_Interface[]) => {
   //    console.log("Datos",data)
   // }
+useEffect(()=>{
+  console.log(cartItems)
+  
+},[cartItems])
 
+
+
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   // const data = {
+  //   //   idProducto: 0,
+  //   //   nombreProducto: productData.nombreProducto,
+  //   //   imagenProducto: productData.imagenProducto || null,
+  //   //   categoria: productData.categoria ,
+  //   //   origen: productData.origen,
+  //   //   nivelTostion: productData.nivelTostion,
+  //   //   estadoProducto: true,
+  //   //   cantidad: 0
+  //   // }
+  //   const response = create(data)
+  //   console.log(response)
+
+  //   onClose();
+  // };
 
   //     // const data = {
   //     //   idProducto: 0,
@@ -129,9 +157,11 @@ export default function Cart({
           <div className="flex">
             <Button
               variant="outline"
+              onClick={(e)=>handleSubmit(e)}
               className="lex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#e68019] text-white text-sm font-bold leading-normal tracking-[0.015em]"
             >
               Registrar
+              
             </Button>
            
           </div>

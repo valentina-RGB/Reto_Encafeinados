@@ -7,18 +7,34 @@ import { Button } from "../../components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../../components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover"
 import { useSupplierService } from "../../api/services/supplier"
-import {supplierType} from "../../types/supplierType"
+import {supplierType, productVariant_Interface} from "../../types"
 
-export function SupplierSelect() {
+
+
+interface SupplierProps {
+  // cartItems: productVariant_Interface[];
+  idProveedor: (id:number, variant:productVariant_Interface[]) => void;
+}
+export function SupplierSelect({
+ idProveedor
+}:SupplierProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setvalue] = React.useState<string>("")
   const [data, setData] = useState<supplierType[]>([])
   const {getAll} = useSupplierService()
 
+
+  
     useEffect(() => {
       fetchCoffeeItems()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+
+    useEffect(() => {
+      idProveedor(Number(value))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[value])
   
     const fetchCoffeeItems = async () => {
       try {
@@ -28,8 +44,6 @@ export function SupplierSelect() {
         console.error("Error fetching coffee items:", error)
       }
     }
-    
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -44,13 +58,14 @@ export function SupplierSelect() {
           <CommandList>
             <CommandEmpty>No se encontro el proveedor.</CommandEmpty>
             <CommandGroup>
-              {data.map((supplier) => (
+              {data.map((supplier: supplierType) => (
                 <CommandItem
                   key={supplier.idProveedor}
-                  value={supplier.nombreProveedor}
+                  value={supplier.idProveedor.toString()}
                   onSelect={(currentValue) => {
                     setvalue(currentValue === value ? "" : currentValue)
                     setOpen(false)
+                    
                   }}
                 >
                   <Check className={cn("mr-2 h-5 w-auto", value === supplier.nombreProveedor ? "opacity-100" : "opacity-0")} />

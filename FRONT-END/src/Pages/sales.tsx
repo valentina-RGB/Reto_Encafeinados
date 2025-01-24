@@ -21,6 +21,7 @@ import ListProductGeneric from "../components/list/ListProductGeneric"
 
 interface CartItem extends productVariant_Interface{
   idProducto: number
+  idProveedor:number
   idVariante: number
   cantidad: number
 }
@@ -74,6 +75,13 @@ export default function ShopPage() {
 
   const filteredCoffeeItems = coffeeItems.filter((item) => item.nombreProducto.toLowerCase().includes(searchCoffee.toLowerCase()))
 
+  const proveedor = (id: number) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) => ({ ...item, idProveedor: id }))
+    );
+  };
+
+  
   return (
     <div
       // className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
@@ -86,7 +94,7 @@ export default function ShopPage() {
               <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] mb-2">
                 Proveedores
               </h3>
-              <SupplierSelect />
+              <SupplierSelect idProveedor={proveedor} />
             </div>
             <ListProductGeneric
                coffeeItems={filteredCoffeeItems}

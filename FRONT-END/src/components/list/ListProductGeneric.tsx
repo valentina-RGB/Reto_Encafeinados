@@ -15,16 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 // import { Label } from "../ui/label";
 // import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Calendar } from "../ui/calendar";
-
-// interface CoffeeItem {
-//   id: string
-//   name: string
-//   code: string
-//   weight: string
-//   image: string
-//   price: number
-// }
+// import { Calendar } from "../ui/calendar";
 
 interface ProductListProps {
   coffeeItems: productType[];
@@ -69,27 +60,13 @@ export default function ListProductGeneric({
 
     console.log(quantities, coffeeItems);
   };
-
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const handleAddToCart = (
     nombreProducto: productType,
     item: productVariant_Interface,
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    const quantity = quantities[item.idVariante] || 1; // Usa el idProducto para acceder a la cantidad
-   
-   
-    
-   
-    console.log("hola", id);
+    const quantity = quantities[item.idVariante] || 1; // Usa el idProducto para acceder a la cantidad 
     e.preventDefault();
-
-    if(!date){
-      alert("Este campo es obligatorio")
-      return
-    }
-
-    
 
     addToCart(nombreProducto, item, quantity);
     setQuantities((prev) => ({ ...prev, [item.idVariante]: 1 })); // Reinicia la cantidad a 1 después de añadir al carrito
@@ -193,20 +170,10 @@ export default function ListProductGeneric({
                                 onSubmit={(e) => { handleAddToCart(product, variety, e)}}
                                 className=""
                                   >
-                                  <Calendar
-                                  mode="single"
-
-                                  selected={date}
-                                  onSelect={setDate}
-                                  // filterDate={(date) => date >= new Date()} // Desactiva fechas pasadas
-                                  key={date?.toString()}
-                                  className="rounded-md border shadow w-100  "
-                                />
                                 <div className="space-y-2">
                                   {/* <h4 className="font-medium leading-none">{nombreProducto}</h4> */}
                                   <p className="text-sm text-muted-foreground">
-                                    Completa los campos para agregar una nueva
-                                    variante.
+                                     Aqui ira la fecha de vencimiento ;).
                                   </p>
                                  
                                 </div>

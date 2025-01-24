@@ -13,6 +13,7 @@ import { productType } from "../types";
 export default function Products() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   
+ 
 
   
 
