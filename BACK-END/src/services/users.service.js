@@ -21,8 +21,8 @@ const getOneUser = async (id) => {
 
 const createUser = async (user) => {
     try {
-        // const hashedPassword = await bcrypt.hash(user.claveUsuario, SALT_ROUNDS);
-        // user.claveUsuario = hashedPassword;
+        const hashedPassword = await bcrypt.hash(user.claveUsuario, SALT_ROUNDS);
+        user.claveUsuario = hashedPassword;
 
         return await userRepository.createUser(user);
     } catch (error) {

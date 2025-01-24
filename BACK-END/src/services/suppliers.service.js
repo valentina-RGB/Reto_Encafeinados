@@ -28,11 +28,9 @@ const createSupplier = async (supplier) => {
         supplierFinal = {
             ...supplier,
             idUsuario: user.idUsuario,
-        }
+        };
 
         const response = await supplierRepository.createSupplier(supplierFinal);
-
-        console.log('proveedor'+ response);
         
         if (!response) return ('No se pudo registrar el proveedor');
 
