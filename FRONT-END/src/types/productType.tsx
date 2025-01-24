@@ -1,9 +1,9 @@
 export interface productType{
     idProducto: number
     nombreProducto: string;
-    imagenProducto: string | File;
+    imagenProducto: null | File;
     categoria: string;
     origen: string;
     nivelTostion: string;
-    estadoProducto: string;
+    estadoProducto: boolean;
 }

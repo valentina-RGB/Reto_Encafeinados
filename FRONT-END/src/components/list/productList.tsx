@@ -65,7 +65,7 @@ export default function ProductList() {
         console.log('Error al cargar los productos', data);
       }
       setProducts(data);
-      console.log(data)
+      // console.log(data)
     }
 
     fetchProduct();
