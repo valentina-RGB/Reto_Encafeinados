@@ -11,8 +11,7 @@ const login = async (correoUsuario, claveUsuario) => {
    
     if (!user) throw new Error("Usuario no encontrado");
 
-    // if(user && await bcrypt.compare(claveUsuario, user.claveUsuario))
-    if (user && claveUsuario === user.claveUsuario) {
+    if(user && await bcrypt.compare(claveUsuario, user.claveUsuario)) {
         const token = jwt.sign(
             { 
                 id: user.idUsuario, 

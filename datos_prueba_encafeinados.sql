@@ -1,7 +1,7 @@
 USE encafeinados;
 
 -- Insertar roles
-INSERT INTO roles (nombreRol) VALUES ('Administrador'), ('Proveedor');
+INSERT INTO roles (nombreRol) VALUES ('Administrador Tienda'), ('Proveedor');
 
 -- Insertar usuarios
 INSERT INTO usuarios (idRol, correoUsuario, claveUsuario) VALUES 
