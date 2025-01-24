@@ -34,7 +34,7 @@ export default function MenuPageSuppliers() {
           {menuItems.map((item) => (
             <Card
               key={item.title}
-              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-orange-500" 
+              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-cafe-200" 
             >
               {/* Icono */}
               <div className="text-[#151314]">
