@@ -59,6 +59,7 @@ export default function ProductItem({
         gramaje: formData.gramaje,
         estadoVariante: true,
         imagenVariante: formData.imagenVariante || null,
+        cantidad: 0
       };
 
       const response = create(data);

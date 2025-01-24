@@ -71,7 +71,8 @@ export default function AddProductModal({
       categoria: productData.categoria ,
       origen: productData.origen,
       nivelTostion: productData.nivelTostion,
-      estadoProducto: true
+      estadoProducto: true,
+      cantidad: 0
     }
     const response = create(data)
     console.log(response)

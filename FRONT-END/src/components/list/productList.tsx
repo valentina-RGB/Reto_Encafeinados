@@ -70,6 +70,7 @@ export default function ProductList() {
 
     fetchProduct();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   return (

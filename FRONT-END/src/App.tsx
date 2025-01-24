@@ -16,8 +16,7 @@ import ShopPage from './Pages/sales'
 import { SuppliersPage } from './Pages/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
-import LoginPage from './Pages/loginPage';
-
+import LoginPage from './Pages/loginVale';
 function App() {
 
   return (

@@ -8,16 +8,6 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover"
 import { useSupplierService } from "../../api/services/supplier"
 import {supplierType} from "../../types/supplierType"
-// interface Supplier {
-//   value: string
-//   label: string
-// }
-
-// const suppliers: Supplier[] = [
-//   { value: "joes_coffee", label: "Joe's Coffee" },
-//   { value: "janes_coffee", label: "Jane's Coffee" },
-//   { value: "jacks_coffee", label: "Jack's Coffee" },
-// ]
 
 export function SupplierSelect() {
   const [open, setOpen] = React.useState(false)
@@ -27,6 +17,7 @@ export function SupplierSelect() {
 
     useEffect(() => {
       fetchCoffeeItems()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   
     const fetchCoffeeItems = async () => {
@@ -43,15 +34,15 @@ export function SupplierSelect() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
-          {value ? data.find((supplier) => supplier.nombreProveedor === value)?.nombreProveedor : "Select supplier..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {value ? data.find((supplier) => supplier.nombreProveedor === value)?.nombreProveedor : "Seleccionar proveedor..."}
+          <ChevronsUpDown className="ml-2 h-5 w-auto shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search supplier..." />
+          <CommandInput placeholder="Buscar proveedor..." />
           <CommandList>
-            <CommandEmpty>No supplier found.</CommandEmpty>
+            <CommandEmpty>No se encontro el proveedor.</CommandEmpty>
             <CommandGroup>
               {data.map((supplier) => (
                 <CommandItem
@@ -62,7 +53,7 @@ export function SupplierSelect() {
                     setOpen(false)
                   }}
                 >
-                  <Check className={cn("mr-2 h-4 w-4", value === supplier.nombreProveedor ? "opacity-100" : "opacity-0")} />
+                  <Check className={cn("mr-2 h-5 w-auto", value === supplier.nombreProveedor ? "opacity-100" : "opacity-0")} />
                   {supplier.nombreProveedor}
                 </CommandItem>
               ))}

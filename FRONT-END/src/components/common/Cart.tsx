@@ -1,5 +1,7 @@
-import { ArrowLeft } from "lucide-react"
-import { productType } from "../../types"
+import { ArrowLeft } from "lucide-react";
+import { productType, productVariant_Interface } from "../../types";
+import { Button } from "../ui/button";
+
 // interface CartItem {
 //   id: string
 //   name: string
@@ -11,46 +13,82 @@ import { productType } from "../../types"
 // }
 
 interface CartProps {
-  cartItems: productType[]
-  updateCartItemQuantity: (id: number, newQuantity: number) => void
-  removeFromCart: (id: number) => void
+  cartItems: productVariant_Interface[];
+  updateCartItemQuantity: (id: number, newQuantity: number) => void;
+  removeFromCart: (id: number) => void;
+  DataProduct: productType[];
 }
 
-export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart }: CartProps) {
+export default function Cart({
+  cartItems,
+  DataProduct,
+  updateCartItemQuantity,
+  removeFromCart,
+}: CartProps) {
   // const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  console.log('CARTIEMS',cartItems)
+  // const handleSubmit = (data: productVariant_Interface[]) => {
+  //    console.log("Datos",data)
+  // }
+
+
+  //     // const data = {
+  //     //   idProducto: 0,
+  //     //   nombreProducto: productData.nombreProducto,
+  //     //   imagenProducto: productData.imagenProducto || null,
+  //     //   categoria: productData.categoria ,
+  //     //   origen: productData.origen,
+  //     //   nivelTostion: productData.nivelTostion,
+  //     //   estadoProducto: true
+  //     // }
+  //     // const response = create(data)
+  //     console.log(data)
+
+  // }
+
   return (
     <div className="layout-content-container flex flex-col w-[500px]">
       <div className="flex flex-wrap justify-between gap-3 mb-4">
-        <p className="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">Your Cart</p>
+        <p className="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">
+          Your Cart
+        </p>
       </div>
       {cartItems.length === 0 ? (
-        <p className="text-[#887563] text-lg">Your cart is empty</p>
+        <p className="text-[#887563] text-lg">Tu carrito esta vacío</p>
       ) : (
         <div className="space-y-4">
           {cartItems.map((item) => (
             <div
-              key={item.idProducto}
+              key={item.idVariante}
               className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between rounded-xl border border-[#f4f2f0]"
             >
               <div className="flex items-center gap-4">
-                <div
+                {/* <div
                   className="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14"
-                  style={{ backgroundImage: `url(${item.imagenProducto})` }}
-                ></div>
+                  style={{ backgroundImage: `url(${item.imagenVariante})` }}
+                ></div> */}
                 <div className="flex flex-col justify-center">
-                  <p className="text-[#181411] text-base font-medium leading-normal line-clamp-1">{item.nombreProducto}</p>
-                  {/* <p className="text-[#887563] text-sm font-normal leading-normal line-clamp-2">
-                    {item.code} | {item.weight}
-                  </p> */}
-                  <p className="text-[#181411] text-sm font-bold leading-normal">${item.nivelTostion}</p>
+                  <p className="text-[#181411] text-base font-medium leading-normal line-clamp-3">
+                    {DataProduct.filter(
+                      (product) => product.idProducto === item.idProducto
+                    )
+                      .map((product) => product.nombreProducto)
+                      .join(", ")}
+                  </p>
+                  <p className="text-[#887563] text-sm font-normal leading-normal line-clamp-2">
+                    {item.gramaje} g
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 text-[#181411]">
                   <button
                     className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f4f2f0] cursor-pointer"
-                    onClick={() => updateCartItemQuantity(item.idProducto, item.idProducto - 1)}
+                    onClick={() =>
+                      updateCartItemQuantity(
+                        item.idVariante,
+                        item.idVariante - 1
+                      )
+                    }
                   >
                     -
                   </button>
@@ -58,21 +96,28 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
                     className="text-base font-medium leading-normal w-8 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     type="number"
                     value={item.cantidad}
-                    onChange={(e) => updateCartItemQuantity(item.idProducto, Number.parseInt(e.target.value) || 1)}
+                    onChange={(e) =>
+                      updateCartItemQuantity(
+                        item.idVariante,
+                        Number.parseInt(e.target.value) || 1
+                      )
+                    }
                     min="1"
                   />
                   <button
                     className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f4f2f0] cursor-pointer"
-                    onClick={() => updateCartItemQuantity(item.idProducto, item.cantidad + 1)}
+                    onClick={() =>
+                      updateCartItemQuantity(item.idVariante, item.cantidad + 1)
+                    }
                   >
                     +
                   </button>
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.idProducto)}
+                  onClick={() => removeFromCart(item.idVariante)}
                   className="text-[#e68019] px-4 py-2 rounded-xl text-sm font-bold"
                 >
-                 Eliminar
+                  Eliminar
                 </button>
               </div>
             </div>
@@ -82,19 +127,22 @@ export default function Cart({ cartItems, updateCartItemQuantity, removeFromCart
             <p className="text-[#181411] text-lg font-bold">${total.toFixed(2)}</p> */}
           </div>
           <div className="flex">
-            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#e68019] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-              <span className="truncate">Registrar</span>
-            </button>
+            <Button
+              variant="outline"
+              className="lex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#e68019] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+            >
+              Registrar
+            </Button>
+           
           </div>
         </div>
       )}
       <div className="flex mt-4">
-        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f4f2f0] text-[#181411] gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
+        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f0e7dd] text-[#181411] gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
           <ArrowLeft size={20} />
-          <span className="truncate">Volver al home</span>
+          <span className="truncate">Cancelar</span>
         </button>
       </div>
     </div>
-  )
+  );
 }
-

@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { MicroscopeIcon as MagnifyingGlass } from "lucide-react"
 import { productType } from "../../types"
+
 // interface CoffeeItem {
 //   id: string
 //   name: string
@@ -47,7 +48,7 @@ export default function ProductList({ coffeeItems, searchCoffee, setSearchCoffee
   return (
     <div className="layout-content-container flex flex-col w-full">
       <div className="flex flex-wrap justify-between gap-3 mb-4">
-        <p className="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">Coffee Shop</p>
+        <p className="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">Productos</p>
       </div>
       <div className="mb-4">
         <label className="flex flex-col min-w-40 h-12 w-full">

@@ -4,6 +4,7 @@ export interface productVariant_Interface{
     gramaje: number;
     estadoVariante: boolean;
     imagenVariante:  File | null;
+    cantidad: number
 }
 
 
