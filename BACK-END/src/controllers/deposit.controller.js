@@ -5,9 +5,9 @@ const getAllDeposit = async (req, res) => {
     res.status(200).json(deposits);
 }
 
-const getOneDeposit = async (req, res) => {
+const getAllDepositBySupplier = async (req, res) => {
     try {
-        const deposits = await depositService.getOneDeposit(req.params.id);
+        const deposits = await depositService.getAllDepositBySupplier(req.params.id);
         res.status(200).json(deposits);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -46,7 +46,7 @@ const deleteDeposit = async (req, res) => {
 
 module.exports = {
     getAllDeposit,
-    getOneDeposit,
+    getAllDepositBySupplier,
     createDeposit,
     updateDeposit,
     deleteDeposit

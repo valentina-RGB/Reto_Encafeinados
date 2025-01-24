@@ -7,6 +7,7 @@ const router = Router();
 router
     .get('/', settlementController.getAllSettlement)
     .get('/:id', settlementController.getOneSettlement)
+    .get('/products/:id', settlementController.getProductsOfSettlement)
     .post('/', settlementController.createSettlement)
     .put('/:id', settlementController.updateSettlement)
     .delete('/:id', settlementController.deleteSettlement);

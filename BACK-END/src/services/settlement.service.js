@@ -16,6 +16,14 @@ const getOneSettlement = async (id) => {
     }
 };
 
+const getProductsOfSettlement = async (id) => {
+    try {
+        return await settlementRepository.getProductsOfSettlement(id);
+    } catch (error) {
+        throw error;
+    }
+};
+
 const createSettlement = async (settlement) => {
     try {
         return await settlementRepository.createSettlement(settlement);
@@ -43,9 +51,10 @@ const deleteSettlement = async (id) => {
 module.exports = {
     getAllSettlement,
     getOneSettlement,
+    getProductsOfSettlement,
     createSettlement,
     updateSettlement,
     deleteSettlement
-};  
+};
 
 

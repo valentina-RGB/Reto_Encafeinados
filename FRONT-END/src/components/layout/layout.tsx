@@ -18,7 +18,7 @@ const Layout = () => {
         <Button 
           icon="pi pi-arrow-left" 
           className="p-button-text text-[#5c412d] hover:bg-[#ebdfd6]" 
-          onClick={() => navigate(-1)} 
+          onClick={() => navigate('/menuStore')} 
         />
         
         {/* Logo */}
@@ -31,11 +31,11 @@ const Layout = () => {
         
         {/* Botones de usuario y cerrar sesión */}
         <div className="flex items-center gap-4">
-          <Button 
+          {/* <Button 
             icon="pi pi-user" 
             className="p-button-text text-[#5c412d]  hover:bg-[#ebdfd6]" 
             onClick={() => console.log("Abrir perfil")} 
-          />
+          /> */}
           <Button 
             icon="pi pi-sign-out" 
             className="p-button-text text-[#5c412d]  hover:bg-[#ebdfd6]" 

@@ -27,14 +27,13 @@ function App() {
       {/* Rutas públicas */}
       <Route path="/" element={<Login />} />
 
-
       {/* Rutas protegidas */}
 
       <Route path="/menuStore" element={<PrivateRoute><MenuPageStore /></PrivateRoute>} />
       <Route path="/menuSuppliers" element={<PrivateRoute><MenuPageSuppliers /></PrivateRoute>} />
 
       <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
-
+        <Route path="/suppliersView" element={<SuppliersViewPage />} />
         <Route path="/suppliers" element={<SuppliersPage />} />
         <Route path="/product" element={<Product />} />
         <Route path="/sales" element={<SalesPage />} />

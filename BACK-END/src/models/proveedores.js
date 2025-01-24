@@ -26,8 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     telefonoProveedor: {
       type: DataTypes.STRING(12),
-      allowNull: true,
-      unique: "telefonoProveedor"
+      allowNull: true
     },
     direccionProveedor: {
       type: DataTypes.STRING(200),
@@ -70,14 +69,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idUsuario" },
-        ]
-      },
-      {
-        name: "telefonoProveedor",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "telefonoProveedor" },
         ]
       },
       {

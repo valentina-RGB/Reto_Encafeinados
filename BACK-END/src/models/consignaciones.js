@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     fechaDevolucion: {
       type: DataTypes.DATEONLY,
-      allowNull: true
+      allowNull: false
     },
     cantidadTotalVendida: {
       type: DataTypes.INTEGER,
