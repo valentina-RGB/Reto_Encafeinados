@@ -15,7 +15,7 @@ export default function LoginPage() {
 
 
   // DATA SUPPLIER
-  const [supplier, useSupplie]
+  // const [supplier, useSupplie]
   const toggleForm = () => {
     setIsLogin(!isLogin)
     setUserType(null)

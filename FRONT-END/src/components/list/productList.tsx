@@ -1,53 +1,76 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ProductItem from "./productItem"
+import { useProductService } from "../../api/services/productServices"
+import { productType } from "../../types"
+// const initialProducts = [
+//   {
+//     id: 1,
+//     name: "Colombia La Esperanza",
+//     description: "12oz bag of beans",
+//     image: "https://cdn.usegalileo.ai/sdxl10/3345527e-3336-41f6-8538-c1fc5b1a95a9.png",
+//     price: 15.99,
+//   },
+//   {
+//     id: 2,
+//     name: "Costa Rica Las Lajas",
+//     description: "12oz bag of beans",
+//     image: "https://cdn.usegalileo.ai/sdxl10/053d8913-3c91-4627-bc29-90c31a21aaa2.png",
+//     price: 17.99,
+//   },
+//   {
+//     id: 3,
+//     name: "Instant Coffee",
+//     description: "8oz jar of instant coffee",
+//     image: "https://cdn.usegalileo.ai/sdxl10/fd47b490-0364-40ff-8006-24f01159f013.png",
+//     price: 9.99,
+//   },
+//   {
+//     id: 4,
+//     name: "Cold Brew Concentrate",
+//     description: "16oz glass bottle",
+//     image: "https://cdn.usegalileo.ai/sdxl10/69c4fdde-58e3-4ca4-a005-a066c0882c53.png",
+//     price: 14.99,
+//   },
+//   {
+//     id: 5,
+//     name: "Breakfast Blend",
+//     description: "12oz bag of ground coffee",
+//     image: "https://cdn.usegalileo.ai/sdxl10/65941351-7663-4ae0-a690-bf4fd4aa325e.png",
+//     price: 13.99,
+//   },
+// ]
 
-const initialProducts = [
-  {
-    id: 1,
-    name: "Colombia La Esperanza",
-    description: "12oz bag of beans",
-    image: "https://cdn.usegalileo.ai/sdxl10/3345527e-3336-41f6-8538-c1fc5b1a95a9.png",
-    price: 15.99,
-  },
-  {
-    id: 2,
-    name: "Costa Rica Las Lajas",
-    description: "12oz bag of beans",
-    image: "https://cdn.usegalileo.ai/sdxl10/053d8913-3c91-4627-bc29-90c31a21aaa2.png",
-    price: 17.99,
-  },
-  {
-    id: 3,
-    name: "Instant Coffee",
-    description: "8oz jar of instant coffee",
-    image: "https://cdn.usegalileo.ai/sdxl10/fd47b490-0364-40ff-8006-24f01159f013.png",
-    price: 9.99,
-  },
-  {
-    id: 4,
-    name: "Cold Brew Concentrate",
-    description: "16oz glass bottle",
-    image: "https://cdn.usegalileo.ai/sdxl10/69c4fdde-58e3-4ca4-a005-a066c0882c53.png",
-    price: 14.99,
-  },
-  {
-    id: 5,
-    name: "Breakfast Blend",
-    description: "12oz bag of ground coffee",
-    image: "https://cdn.usegalileo.ai/sdxl10/65941351-7663-4ae0-a690-bf4fd4aa325e.png",
-    price: 13.99,
-  },
-]
+
 
 export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [products] = useState(initialProducts)
+  const [products, setProducts] = useState<productType[]>([])
+
+  // METODOS DE PARA LA API
+  const {getAll} = useProductService();
 
   const filteredProducts = products
-    .filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((product) => product.nombreProducto.toLowerCase().includes(searchTerm.toLowerCase()))
     .slice(0, 3)
+
+  useEffect(() => {
+    console.log("ProductList rendered")
+    const fetchProduct = async () =>{
+
+      const data = await getAll();
+
+      if(!data){
+        console.log('Error al cargar los productos', data);
+      }
+      setProducts(data);
+      console.log(data)
+    }
+
+    fetchProduct();
+
+  },[])
 
   return (
     <>
@@ -75,7 +98,7 @@ export default function ProductList() {
         </label>
       </div>
       {filteredProducts.map((product) => (
-        <ProductItem key={product.id} {...product} />
+        <ProductItem key={product.idProducto} {...product} />
       ))}
     </>
   )
