@@ -12,11 +12,10 @@ import Login from './Pages/loginPage';
 import PrivateRoute from './components/privateRoute';
 import Product from './Pages/product';
 import SalesPage from './Pages/sales'
-import ShopPage from './Pages/sales'
+import ShopPage from './Pages/shops';
 import { SuppliersPage } from './Pages/suppliers/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
-import LoginPage from './Pages/loginVale';
 import SuppliersViewPage from './Pages/suppliersViewPage';
 
 function App() {
@@ -33,6 +32,7 @@ function App() {
       <Route path="/menuSuppliers" element={<PrivateRoute><MenuPageSuppliers /></PrivateRoute>} />
 
       <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
+
         <Route path="/suppliersView" element={<SuppliersViewPage />} />
         <Route path="/suppliers" element={<SuppliersPage />} />
         <Route path="/product" element={<Product />} />
@@ -40,7 +40,6 @@ function App() {
         <Route path="/shop" element={<ShopPage />} />
 
         <Route path="/user" element={<UserPage />} />
-        <Route path="/login" element={<LoginPage />} />
 
         {/* <Route path="productos" element={<Productos />} />
           <Route path="proveedores" element={<Proveedores />} /> */}
