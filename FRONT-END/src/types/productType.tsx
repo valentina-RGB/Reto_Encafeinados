@@ -6,4 +6,5 @@ export interface productType{
     origen: string;
     nivelTostion: string;
     estadoProducto: boolean;
+    cantidad: number
 }

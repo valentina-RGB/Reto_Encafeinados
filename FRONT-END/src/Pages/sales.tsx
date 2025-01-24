@@ -2,27 +2,31 @@
 
 import { useState, useEffect } from "react"
 import Header from "../components/common/Header"
-import ProductList from "../components/list/productListSales"
-import Cart from "../components/common/cart"
+import ProductList from "../components/list/ProductListSales"
+import Cart from "../components/common/Cart"
 import { SupplierSelect } from "../components/common/SupplierSelect"
+import { useSupplierService } from "../api/services/supplier"
+import { supplierType } from "../types"
+import { productType } from "../types"
+import { useProductService } from "../api/services/productServices"
+// interface CoffeeItem {
+//   id: string
+//   name: string
+//   code: string
+//   weight: string
+//   image: string
+//   price: number
+// }
 
-interface CoffeeItem {
-  id: string
-  name: string
-  code: string
-  weight: string
-  image: string
-  price: number
-}
-
-interface CartItem extends CoffeeItem {
-  quantity: number
+interface CartItem extends productType {
+  cantidad: number
 }
 
 export default function ShopPage() {
-  const [coffeeItems, setCoffeeItems] = useState<CoffeeItem[]>([])
+  const [coffeeItems, setCoffeeItems] = useState<productType[]>([])
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [searchCoffee, setSearchCoffee] = useState("")
+  const {getAll} = useProductService()
 
   useEffect(() => {
     fetchCoffeeItems()
@@ -30,20 +34,19 @@ export default function ShopPage() {
 
   const fetchCoffeeItems = async () => {
     try {
-      const response = await fetch("/api/coffee-items")
-      const data = await response.json()
-      setCoffeeItems(data)
+      const response = await getAll()
+      setCoffeeItems(response)
     } catch (error) {
       console.error("Error fetching coffee items:", error)
     }
   }
 
-  const addToCart = (item: CoffeeItem, quantity: number) => {
+  const addToCart = (item: productType, quantity: number) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((cartItem) => cartItem.id === item.id)
+      const existingItem = prevItems.find((cartItem) => cartItem.idProducto === item.idProducto)
       if (existingItem) {
         return prevItems.map((cartItem) =>
-          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + quantity } : cartItem,
+          cartItem.idProducto === item.idProducto? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem,
         )
       } else {
         return [...prevItems, { ...item, quantity }]
@@ -51,22 +54,22 @@ export default function ShopPage() {
     })
   }
 
-  const updateCartItemQuantity = (itemId: string, newQuantity: number) => {
+  const updateCartItemQuantity = (itemId: number, newQuantity: number) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)),
+      prevItems.map((item) => (item.idProducto === itemId ? { ...item, cantidad: newQuantity } : item)),
     )
   }
 
-  const removeFromCart = (itemId: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId))
+  const removeFromCart = (itemId: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.idProducto !== itemId))
   }
 
-  const filteredCoffeeItems = coffeeItems.filter((item) => item.name.toLowerCase().includes(searchCoffee.toLowerCase()))
+  const filteredCoffeeItems = coffeeItems.filter((item) => item.nombreProducto.toLowerCase().includes(searchCoffee.toLowerCase()))
 
   return (
     <div
       className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style={{ fontFamily: 'Epilogue, "Noto Sans", sans-serif' }}
+      // style={{ fontFamily: 'Epilogue, "Noto Sans", sans-serif' }}
     >
       <div className="layout-container flex h-full grow flex-col">
         <Header />
