@@ -17,6 +17,8 @@ import { SuppliersPage } from './Pages/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
 import LoginPage from './Pages/loginVale';
+import SuppliersViewPage from './Pages/suppliersViewPage';
+
 function App() {
 
   return (
@@ -33,7 +35,7 @@ function App() {
 
       <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
 
-
+        <Route path="/suppliersViewPage" element={<SuppliersViewPage />} />
         <Route path="/suppliers" element={<SuppliersPage />} />
         <Route path="/product" element={<Product />} />
         <Route path="/sales" element={<SalesPage />} />
