@@ -24,12 +24,12 @@ function App() {
     <Routes>
       {/* Rutas públicas */}
       <Route path="/" element={<Login />} />
-      <Route path="/menuStore" element={<MenuPageStore />} />
-      <Route path="/menuSuppliers" element={<MenuPageSuppliers />} />
+
 
       {/* Rutas protegidas */}
 
-      
+      <Route path="/menuStore" element={<PrivateRoute><MenuPageStore /></PrivateRoute>} />
+      <Route path="/menuSuppliers" element={<PrivateRoute><MenuPageSuppliers /></PrivateRoute>} />
 
       <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
 
@@ -54,4 +54,4 @@ function App() {
 
 }
 
-export default App
+export default App

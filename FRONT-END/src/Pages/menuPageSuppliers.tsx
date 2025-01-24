@@ -4,28 +4,38 @@ import { Button } from "primereact/button"; // Botón de PrimeReact
 const menuItems = [
   {
     title: "Productos",
-    description: "Gestionar inventario y precios",
-    icon: "pi pi-box", 
+    description: "Ver los productos disponibles",
+    icon: "pi pi-box",
   },
   {
     title: "Consignaciones",
-    description: "Registrar Consignaciones",
-    icon: "pi pi-dollar", 
+    description: "Ver las consignaciones",
+    icon: "pi pi-dollar",
   },
   {
     title: "Balance de Ventas",
     description: "Ver el Balance de Ventas",
-    icon: "pi pi-chart-bar", 
+    icon: "pi pi-chart-bar",
   },
 ];
 
-export default function MenuPageSuppliers() {
+const MenuPageSuppliers = () => {
+  const redirectTo = (title: string) => {
+    if (title === "Productos") {
+      window.location.href = "/product";
+    } else if (title === "Consignaciones") {
+      window.location.href = "/sales";
+    } else if (title === "Balance de Ventas") {
+      window.location.href = "/sales";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f4f4] font-sans flex items-center justify-center">
       <div className="mx-auto max-w-[960px] px-4 py-5">
         {/* Encabezado */}
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-black tracking-tight text-[#151313]">Bienvenido proveedor "" a Encafeinados</h1>
+          <h1 className="text-4xl font-black tracking-tight text-[#151313]">Bienvenido a Encafeinados</h1>
           <p className="mt-2 text-base text-[#766b6c]">¿Qué quieres hacer hoy?</p>
         </div>
 
@@ -34,7 +44,8 @@ export default function MenuPageSuppliers() {
           {menuItems.map((item) => (
             <Card
               key={item.title}
-              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-cafe-200" 
+              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-cafe-200"
+              onClick={() => redirectTo(item.title)}
             >
               {/* Icono */}
               <div className="text-[#151314]">
@@ -53,6 +64,7 @@ export default function MenuPageSuppliers() {
                 className="p-button-rounded p-button-outline mt-2"
                 icon="pi pi-chevron-right"
                 style={{ width: "fit-content", alignSelf: "center" }}
+                onClick={() => redirectTo(item.title)}
               />
             </Card>
           ))}
@@ -60,4 +72,6 @@ export default function MenuPageSuppliers() {
       </div>
     </div>
   );
-}
+};
+
+export default MenuPageSuppliers;
