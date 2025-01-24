@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       const response = await login({ correoUsuario, claveUsuario });
       localStorage.setItem("token", response.token);
-      navigate("/user");
+      navigate("/menuStore");
     } catch (err) {
       setError("Credenciales inválidas. Inténtalo de nuevo.");
     }

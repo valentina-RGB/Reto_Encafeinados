@@ -8,7 +8,7 @@ const UserPage: React.FC = () => {
 return (
     
     <div>
-        <h1>Pagina de deisy</h1>
+        <h1>Hola Mundo</h1>
     </div>
 )
 }
