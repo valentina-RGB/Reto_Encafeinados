@@ -1,12 +1,33 @@
 const { abonoproveedor } = require('../models');
+const { sequelize } = require('../config/db')
+const { QueryTypes } = require('sequelize');
 
 const getAllDeposit = async () => {
     return await abonoproveedor.findAll();
 };
 
-const getOneDeposit = async (id) => {
-    return await abonoproveedor.findByPk(id);
-};
+const getAllDepositBySupplier = async () => {
+
+        const totalDeposits = await sequelize.query(
+            `
+            SELECT 
+                p.idProveedor,
+                p.nombreProveedor,
+                SUM(a.monto) AS abonos
+            FROM 
+                proveedores p
+            JOIN 
+                liquidacionProveedor l ON p.idProveedor = l.idProveedor
+            LEFT JOIN 
+                abonoProveedor a ON l.idLiquidacion = a.idLiquidacionProveedor
+            GROUP BY 
+                p.idProveedor, p.nombreProveedor;
+            `,
+            { type: QueryTypes.SELECT }
+        );
+        return totalDeposits;
+    };
+    
 
 const createDeposit = async (deposit) => {
     return await abonoproveedor.create(deposit);
@@ -26,7 +47,7 @@ const deleteDeposit = async (id) => {
 
 module.exports = {
     getAllDeposit,
-    getOneDeposit,
+    getAllDepositBySupplier,
     createDeposit,
     updateDeposit,
     deleteDeposit

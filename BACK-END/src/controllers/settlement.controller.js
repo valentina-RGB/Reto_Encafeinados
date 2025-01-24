@@ -14,6 +14,15 @@ const getOneSettlement = async (req, res) => {
     }
 };
 
+const getProductsOfSettlement = async (req, res) => {
+    try {
+        const settlement = await settlementService.getProductsOfSettlement(req.params.id);
+        res.status(200).json(settlement);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const createSettlement = async (req, res) => {
     try {
         const settlement = await settlementService.createSettlement(req.body);
@@ -47,5 +56,6 @@ module.exports = {
     getOneSettlement,
     createSettlement,
     updateSettlement,
-    deleteSettlement
+    deleteSettlement,
+    getProductsOfSettlement
 };

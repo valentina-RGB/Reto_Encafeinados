@@ -40,7 +40,7 @@ CREATE TABLE proveedores (
     idUsuario INT UNIQUE NOT NULL,
     nombreProveedor VARCHAR(100) NOT NULL,
 	correoProveedor VARCHAR(100) NOT NULL,
-    telefonoProveedor VARCHAR(12) UNIQUE,
+    telefonoProveedor VARCHAR(12),
     direccionProveedor VARCHAR(200),
     bancoProveedor VARCHAR(60),
     tipoCuenta VARCHAR(20),
@@ -397,3 +397,17 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+-- ------------------------------------------ VISTAS -------------------------------------------------
+-- Vista para mostrar los productos por los cuales debe pagar la tienda
+CREATE OR REPLACE VIEW vista_productos_proveedor AS
+SELECT 
+    p.nombreProducto AS producto,
+    dc.cantidadVendida AS cantidad_vendida,
+    dc.precioCompra AS precio_compra,
+    (dc.cantidadVendida * dc.precioCompra) AS total,
+    c.idProveedor -- Incluir idProveedor en la vista
+FROM detalleConsignacion dc
+JOIN consignaciones c ON dc.idConsignacion = c.idConsignacion
+JOIN productos p ON p.idProducto = dc.idVarianteProducto
+WHERE dc.cantidadVendida > 0;

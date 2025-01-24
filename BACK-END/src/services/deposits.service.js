@@ -8,9 +8,9 @@ const getAllDeposit = async () => {
     }
 };
 
-const getOneDeposit = async (id) => {
+const getAllDepositBySupplier = async (id) => {
     try {
-        return await depositRepository.getOneDeposit(id);
+        return await depositRepository.getAllDepositBySupplier(id);
     } catch (error) {
         throw error;
     }
@@ -42,7 +42,7 @@ const deleteDeposit = async (id) => {
 
 module.exports = {
     getAllDeposit,
-    getOneDeposit,
+    getAllDepositBySupplier,
     createDeposit,
     updateDeposit,
     deleteDeposit

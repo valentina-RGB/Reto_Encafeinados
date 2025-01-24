@@ -2,20 +2,26 @@ import { Card } from "../components/ui/card";
 import { Button } from "primereact/button"; // Botón de PrimeReact
 
 const menuItems = [
-  {
-    title: "Productos",
-    description: "Ver los productos disponibles",
-    icon: "pi pi-box",
-  },
+
   {
     title: "Consignaciones",
-    description: "Ver las consignaciones",
+    description: "Registrar Consignación",
+    icon: "pi pi-cart-arrow-down",
+  },
+  {
+    title: "Salidas del Inventario",
+    description: "Registrar Venta o Ajuste",
     icon: "pi pi-dollar",
   },
   {
-    title: "Balance de Ventas",
-    description: "Ver el Balance de Ventas",
-    icon: "pi pi-chart-bar",
+    title: "Proveedores",
+    description: "Ver Deuda a Proveedores",
+    icon: "pi pi-truck",
+  },
+  {
+    title: "Productos",
+    description: "Ver Productos Disponibles",
+    icon: "pi pi-box",
   },
 ];
 
@@ -25,8 +31,10 @@ const MenuPageStore = () => {
       window.location.href = "/product";
     } else if (title === "Consignaciones") {
       window.location.href = "/sales";
-    } else if (title === "Balance de Ventas") {
+    } else if (title === "Salidas del Inventario") {
       window.location.href = "/sales";
+    } else if (title === "Proveedores") {
+      window.location.href = "/suppliers";
     }
   };
 

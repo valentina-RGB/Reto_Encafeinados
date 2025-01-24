@@ -1,27 +1,13 @@
 "use client";
 
 import * as React from "react";
-import {
-  ColumnDef,
-  SortingState,
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
+import {ColumnDef, SortingState,useReactTable, getCoreRowModel,  getPaginationRowModel, getSortedRowModel, getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Input } from "../../components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
 
 import { useSupplierLService } from "../../api/services/supplierLiquidation";
 import { supplierLiquidationType } from "../../types";
@@ -29,6 +15,8 @@ import { supplierLiquidationType } from "../../types";
 import { RegistrarProveedorModal } from "./supplierModal";
 import { RegistrarAbonoModal } from "./depositModal";
 import { DetalleProveedorModal } from "./detailSupplier";
+import { useSupplierService } from "../../api/services/supplier";
+import { useDepositSupplierService } from "../../api/services/depositSupplier";
 
 export function SuppliersPage() {
   const [data, setData] = React.useState<supplierLiquidationType[]>([]);
@@ -41,21 +29,41 @@ export function SuppliersPage() {
   const [verDetalleModal, setVerDetalleModal] = React.useState(false);
 
   // Form states
-  const [selectedSupplier, setSelectedSupplier] = React.useState<supplierLiquidationType | null>(null);
+  const [selectedSupplier, setSelectedSupplier] = React.useState<any | null>(null);
 
   const { getAll } = useSupplierLService();
+  const { getById: getSupplierById } = useSupplierService();
+
+  const { getAll: getDepositById } = useDepositSupplierService();
 
   const fetchData = React.useCallback(async () => {
     try {
-      setLoading(true);
-      const result = await getAll();
-      setData(result);
-    } catch (err: unknown) {
-      setError("Ocurrió un error al cargar los datos.");
+        setLoading(true);
+        const result = await getAll(); // Obtiene la lista base de liquidaciones y proveedores
+        const deposit = await getDepositById(); // Total de abonos
+
+        const suppliers = await Promise.all(
+            result.map(async (item) => {
+                const supplier = await getSupplierById(item.idProveedor); // Detalles del proveedor
+
+                console.log(deposit);
+                return {
+                    ...item,
+                    nombreProveedor: supplier.nombreProveedor,
+                    abonos: deposit.find(d => d.idProveedor === item.idProveedor)?.abonos || 0, // Si no hay abonos, usa 0
+                };
+            })
+        );
+
+        setData(suppliers);
+    } catch (err) {
+        console.error(err);
+        setError("Ocurrió un error al cargar los datos.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  }, []);
+}, [getAll, getSupplierById, getDepositById]);
+ 
 
   React.useEffect(() => {
     fetchData();
@@ -66,19 +74,23 @@ export function SuppliersPage() {
 
   const columns: ColumnDef<supplierLiquidationType>[] = [
     {
-      accessorKey: "idLiquidacion",
-      header: "ID Liquidación",
+      accessorKey: "nombreProveedor",
+      header: "Proveedor",
     },
     {
-      accessorKey: "idProveedor",
-      header: "ID Proveedor",
+      accessorKey: "abonos",
+      header: "Total Abonos",
+      cell: ({ row }) => {
+        const abonos = Number(row.original.abonos);
+        return <span>{isNaN(abonos) ? "$0.00" : abonos.toLocaleString("es-CO", { style: "currency", currency: "COP" })}</span>;
+      },
     },
     {
       accessorKey: "deudaActual",
       header: "Deuda Actual",
       cell: ({ row }) => {
         const deudaActual = Number(row.original.deudaActual);
-        return <span>${isNaN(deudaActual) ? "0.00" : deudaActual.toFixed(2)}</span>;
+        return <span>{isNaN(deudaActual) ? "$0.00" : deudaActual.toLocaleString("es-CO", { style: "currency", currency: "COP" })}</span>;
       },
     },
     {
@@ -87,9 +99,9 @@ export function SuppliersPage() {
       cell: ({ row }) => (
         <Badge
           variant={
-            row.original.estadoLiquidacion === "Pagado"
+            row.original.estadoLiquidacion === "PAGADA"
               ? "default"
-              : row.original.estadoLiquidacion === "Pendiente"
+              : row.original.estadoLiquidacion === "PENDIENTE"
               ? "secondary"
               : "destructive"
           }
@@ -102,9 +114,9 @@ export function SuppliersPage() {
       id: "acciones",
       header: "Acciones",
       cell: ({ row }) => (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 justify-center">
           <Button
-          variant="outline"
+            variant="outline"
             className="border-[#c8a78f] text-[#5c412d] hover:bg-amber-100" 
             onClick={() => {
               setSelectedSupplier(row.original);
