@@ -40,8 +40,11 @@ useEffect(()=>{
 
 
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+}
+  
 
   //   // const data = {
   //   //   idProducto: 0,

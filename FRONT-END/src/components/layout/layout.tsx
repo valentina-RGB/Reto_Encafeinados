@@ -39,7 +39,7 @@ const Layout = () => {
   
   {/* Main Content */}
   <main className="mt-0 mb-2 flex-1 overflow-y-auto">
-    <div className="p-4 bg-[#F5F5F5] shadow-md h-full">
+    <div className="p-4 bg-[#F5F5F5] shadow-md h-screen">
       {/* Contenido principal */}
       <Outlet />
     </div>

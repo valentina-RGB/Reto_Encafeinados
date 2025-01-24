@@ -32,7 +32,7 @@ export function SupplierSelect({
 
 
     useEffect(() => {
-      idProveedor(Number(value))
+      // idProveedor(Number(value))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[value])
   
