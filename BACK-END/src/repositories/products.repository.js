@@ -1,11 +1,15 @@
+const { sequelize }=require('../config/db')
+const { QueryTypes } = require('sequelize');
+
 const { productos } = require('../models');
+
 
 const getAllProducts = async () => {
     return await productos.findAll();
 };
 
 const getAllProductsAvailable = async () => {
-    return this.sequelize.query(`
+    return sequelize.query(`
         SELECT DISTINCT 
           p.idProducto,
           p.nombreProducto,
