@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idConsignacion: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'consignaciones',
         key: 'idConsignacion'
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idVarianteProducto: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'varianteproducto',
         key: 'idVariante'

@@ -19,6 +19,23 @@ const menuItems = [
   },
 ];
 
+const redirectTo = () => {
+
+  menuItems.forEach(element => {
+    if(element.title === "Productos"){
+      window.location.href = "/product";
+      // navigate("/product");
+    }else if(element.title === "Consignaciones"){
+      window.location.href = "/shop";
+      // navigate("/shop");
+    }else if(element.title === "Ventas"){
+      window.location.href = "/sales";
+      // navigate("/sales");
+    }
+  });
+
+}
+
 export default function MenuPageStore() {
   return (
     <div className="min-h-screen bg-[#f5f4f4] font-sans flex items-center justify-center">
@@ -53,6 +70,7 @@ export default function MenuPageStore() {
                 className="p-button-rounded p-button-outline mt-2"
                 icon="pi pi-chevron-right"
                 style={{ width: "fit-content", alignSelf: "center" }}
+                onClick={redirectTo} 
               />
             </Card>
           ))}

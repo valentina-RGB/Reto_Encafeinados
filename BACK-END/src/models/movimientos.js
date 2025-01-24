@@ -13,6 +13,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     fechaMovimiento: {
       type: DataTypes.DATEONLY,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+    },
+    motivoMovimiento: {
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     estadoMovimiento: {

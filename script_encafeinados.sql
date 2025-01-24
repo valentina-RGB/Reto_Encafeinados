@@ -13,7 +13,7 @@ CREATE TABLE roles (
 -- Tabla para gestionar los usuarios que pueden acceder al aplicativo
 CREATE TABLE usuarios (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-    idRol INT,
+    idRol INT NOT NULL,
     correoUsuario VARCHAR(50) NOT NULL UNIQUE,
     claveUsuario VARCHAR(255) NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -24,7 +24,7 @@ CREATE TABLE usuarios (
 -- Tabla para gestionar las diferentes teindas que utilizarán el aplicativo
 CREATE TABLE tiendas (
     idTienda INT AUTO_INCREMENT PRIMARY KEY,
-    idUsuario INT UNIQUE,
+    idUsuario INT UNIQUE NOT NULL,
     nombreTienda VARCHAR(100) NOT NULL,
     correoTienda VARCHAR(100) NOT NULL,
     telefonoTienda VARCHAR (12) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE tiendas (
 -- Para gestionar los proveedores de la tienda
 CREATE TABLE proveedores (
     idProveedor INT AUTO_INCREMENT PRIMARY KEY,
-    idUsuario INT UNIQUE,
+    idUsuario INT UNIQUE NOT NULL,
     nombreProveedor VARCHAR(100) NOT NULL,
 	correoProveedor VARCHAR(100) NOT NULL,
     telefonoProveedor VARCHAR(12) UNIQUE,
@@ -66,7 +66,7 @@ CREATE TABLE productos (
 -- Para gestionar el perfil sensorial de cada café
 CREATE TABLE perfilSensorial (
     idPerfilSensorial INT AUTO_INCREMENT PRIMARY KEY,
-    idProducto INT,
+    idProducto INT NOT NULL,
     aroma VARCHAR(50),
     acidez VARCHAR(50),
     cuerpo VARCHAR(50),
@@ -77,7 +77,7 @@ CREATE TABLE perfilSensorial (
 -- Para administrar los tipos de café (Sta Barbara 250g o Sta Barbara 500g)
 CREATE TABLE varianteProducto (
     idVariante INT AUTO_INCREMENT PRIMARY KEY,
-    idProducto INT,
+    idProducto INT NOT NULL,
     imagenVariante VARCHAR(200) NULL,
     gramaje INT NOT NULL,
     estadoVariante TINYINT(1) NOT NULL DEFAULT true,
@@ -88,7 +88,7 @@ CREATE TABLE varianteProducto (
 -- Gestiona las entradas de los productos al aplicativo
 CREATE TABLE consignaciones (
     idConsignacion INT AUTO_INCREMENT PRIMARY KEY,
-    idProveedor INT,
+    idProveedor INT NOT NULL,
     fechaIngreso DATETIME DEFAULT CURRENT_TIMESTAMP,
     fechaDevolucion DATE,
     cantidadTotalVendida INT DEFAULT 0,
@@ -101,8 +101,8 @@ CREATE TABLE consignaciones (
 -- Gestiona la entrada especifica de cada producto
 CREATE TABLE detalleConsignacion (
     idDetalleConsignacion INT AUTO_INCREMENT PRIMARY KEY,
-    idConsignacion INT,
-    idVarianteProducto INT,
+    idConsignacion INT NOT NULL,
+    idVarianteProducto INT NOT NULL,
     cantidadRecibida INT NOT NULL,
     cantidadVendida INT NOT NULL DEFAULT 0,
     cantidadDevuelta INT NOT NULL DEFAULT 0,
@@ -112,8 +112,8 @@ CREATE TABLE detalleConsignacion (
 	precioVenta DECIMAL(10, 2) GENERATED ALWAYS AS (precioCompra * (1 + porcentajeGanancia / 100)) STORED,
     subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (precioCompra * cantidadRecibida) STORED,
     
-    FOREIGN KEY (idConsignacion) REFERENCES consignaciones(idConsignacion) ON DELETE SET NULL,
-    FOREIGN KEY (idVarianteProducto) REFERENCES varianteProducto(idVariante) ON DELETE SET NULL,
+    FOREIGN KEY (idConsignacion) REFERENCES consignaciones(idConsignacion) ,
+    FOREIGN KEY (idVarianteProducto) REFERENCES varianteProducto(idVariante) ,
     CONSTRAINT chk_cantidad_positiva CHECK (cantidadRecibida > 0),
     CONSTRAINT chk_precio_unitario_positivo CHECK (precioCompra > 0),
     CONSTRAINT chk_porcentajeGanancia CHECK (porcentajeGanancia BETWEEN 0 AND 100),
@@ -125,7 +125,8 @@ CREATE TABLE detalleConsignacion (
 CREATE TABLE movimientos (
     idMovimiento INT AUTO_INCREMENT PRIMARY KEY,
     tipoMovimiento ENUM('Venta', 'Devolución', 'Ajuste') NOT NULL,
-    fechaMovimiento DATE,
+    fechaMovimiento DATE DEFAULT CURRENT_TIMESTAMP,
+    motivoMovimiento VARCHAR(200) NULL,
     estadoMovimiento TINYINT DEFAULT true,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -159,7 +160,7 @@ CREATE TABLE liquidacionProveedor (
 -- Tabla para realizar los pagos al proveedor
 CREATE TABLE abonoProveedor (
     idAbono INT AUTO_INCREMENT PRIMARY KEY,
-    idLiquidacionProveedor INT,
+    idLiquidacionProveedor INT NOT NULL,
     fechaPago DATETIME DEFAULT CURRENT_TIMESTAMP,
     monto DECIMAL(10, 2) NOT NULL,
     metodoPago ENUM('EFECTIVO', 'TRANSFERENCIA') NOT NULL,
