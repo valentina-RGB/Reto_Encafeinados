@@ -1,5 +1,6 @@
 const userRepository = require('../repositories/users.repository');
 
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
@@ -50,12 +51,20 @@ const deleteUser = async (id) => {
     }
 };
 
-const nodemailer = require('nodemailer');
-
 const createPassword = async (name) => {
-    const cleanName = name.trim().replace(/\s+/g, '');
+
+    const cleanName = name
+    .trim() // Elimina los espacios al inicio y al final
+    .replace(/\s+/g, '') // Elimina los espacios intermedios
+    .normalize('NFD') // Normaliza para separar caracteres acentuados
+    .replace(/[\u0300-\u036f]/g, '') // Elimina las tildes
+    .toLowerCase(); // Convierte todo a minúsculas
+
+    // Capitaliza la primera letra y deja el resto en minúsculas
+    const finalName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+
     const nrmd = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `${cleanName}${nrmd}.`;
+    return `${finalName}${nrmd}.`;
 };
 
 const sendEmail = async (email, password) => {
@@ -74,14 +83,14 @@ const sendEmail = async (email, password) => {
             to: email,
             subject: 'Credenciales de acceso a Encafeinados',
             text: `
-            ¡Hola, CoffeLover!
+        ¡Hola, CoffeLover!
         
-            Nos complace tenerte dentro de la comunidad de Encafeinados. Tus credenciales de acceso son las siguientes:
+    Nos complace tenerte dentro de la comunidad de Encafeinados. Tus credenciales de acceso son las siguientes:
 
-            Usuario: ${email}
-            Contraseña: ${password}
+        Usuario: ${email}
+        Contraseña: ${password}
 
-            Por favor, guarda esta información de manera segura.`
+    Por favor, guarda esta información de manera segura.`
         };
         
         // Enviar correo
