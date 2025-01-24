@@ -1,5 +1,6 @@
 export interface supplierLiquidationType{
     idLiquidacion: number;
-    idConsignacion: number;
-    estadoLiquidacion: number;
+    idProveedor: number;
+    deudaActual: number;
+    estadoLiquidacion: string;
 }

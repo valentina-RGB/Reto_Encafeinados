@@ -1,8 +1,7 @@
-export interface depositSupplier_Interface{
-    idAbono: number;
-    idALiquidacionProveedor: number;
+export interface depositSupplierType{
+    idLiquidacionProveedor: number;
     fechaPago: Date;
     monto: number;
-    metodoPago: number;
-    referencia: number;
+    metodoPago: string;
+    referencia: string;
 }

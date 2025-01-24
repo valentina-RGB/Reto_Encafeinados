@@ -13,7 +13,7 @@ import PrivateRoute from './components/privateRoute';
 import Product from './Pages/product';
 import SalesPage from './Pages/sales'
 import ShopPage from './Pages/sales'
-import { SuppliersPage } from './Pages/paymentsPage';
+import { SuppliersPage } from './Pages/suppliers/paymentsPage';
 import MenuPageSuppliers from './Pages/menuPageSuppliers';
 import MenuPageStore from './Pages/menuPagesStore';
 import LoginPage from './Pages/loginVale';
@@ -33,7 +33,6 @@ function App() {
 
       <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
 
-
         <Route path="/suppliers" element={<SuppliersPage />} />
         <Route path="/product" element={<Product />} />
         <Route path="/sales" element={<SalesPage />} />
@@ -42,12 +41,10 @@ function App() {
         <Route path="/user" element={<UserPage />} />
         <Route path="/login" element={<LoginPage />} />
 
-
         {/* <Route path="productos" element={<Productos />} />
           <Route path="proveedores" element={<Proveedores />} /> */}
 
       </Route>
-
 
     </Routes>
   );
