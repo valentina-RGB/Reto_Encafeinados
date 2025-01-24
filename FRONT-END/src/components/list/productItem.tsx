@@ -1,77 +1,155 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-// import Image from "next/image"
-import Modal from "../../components/common/Modal"
+import { useState } from "react";
+import { productType } from "../../types";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../components/ui/popover";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { useProductVariantService } from "../../api/services/productVariantServices";
 
+export default function ProductItem({
+  nombreProducto,
+  imagenProducto,
+  estadoProducto
+}: productType) {
 
-interface ProductItemProps {
-  name: string
-  description: string
-  price: number
-}
+  const { create } = useProductVariantService();
 
-export default function ProductItem({ name, description, price }: ProductItemProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [profitPercentage, setProfitPercentage] = useState("")
-  const [finalPrice, setFinalPrice] = useState(0)
+  // PARA LAS VARIANTES DE PRODUCTO
+  const [formData, setFormData] = useState({
+    gramaje: 0,
+    imagenVariante: null as File | null,
+  });
 
-  const handleAddClick = () => {
-    setIsModalOpen(true)
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleProfitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setProfitPercentage(value)
-    const percentage = Number.parseFloat(value) || 0
-    const calculatedPrice = price * (1 + percentage / 100)
-    setFinalPrice(Number.parseFloat(calculatedPrice.toFixed(2)))
-  }
+  const handleImageChange = (file: File | null) => {
+    if (file) {
+      setFormData((prev) => ({ ...prev, imagenVariante: file }));
+      // setErrors(prev => ({ ...prev, image: '' }));
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      gramaje: 0,
+      imagenVariante: null,
+    });
+    // setError(null);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Datos del formulario:", formData);
+    alert("Formulario enviado: " + JSON.stringify(formData));
+
+    if (formData.gramaje) {
+      const data = {
+        idVariante: 0,
+        idProducto: 1,
+        gramaje: formData.gramaje,
+        estadoVariante: true,
+        imagenVariante: formData.imagenVariante || null,
+      };
+
+      const response = create(data);
+
+      if (!response) {
+        console.log("Error al crear la variante", response);
+      }
+    }
+    resetForm();
+    // Aquí puedes manejar la lógica para guardar o enviar los datos
+  };
+
+  // VALIDACIONES DE FORMULARIO
 
   return (
     <div className="flex items-center gap-4 bg-[#fcfaf8] px-4 min-h-[120px] py-4 justify-between mb-4">
       <div className="flex items-center gap-4">
         <div
           className="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-24"
-          // style={{ backgroundImage: `url("${image}")` }}
+          style={{ backgroundImage: `url("${imagenProducto}")` }}
         ></div>
         <div className="flex flex-col justify-center">
-          <p className="text-[#1b130d] text-lg font-medium leading-normal line-clamp-1">{name}</p>
-          <p className="text-[#9a6c4c] text-sm font-normal leading-normal line-clamp-2">{description}</p>
-          <p className="text-[#1b130d] text-base font-bold mt-2">${price.toFixed(2)}</p>
+          <p className="text-[#1b130d] text-lg font-medium leading-normal line-clamp-1">
+            {nombreProducto}
+          </p>
+          <p className="text-[#9a6c4c] text-sm font-normal leading-normal line-clamp-2">
+            {estadoProducto}
+          </p>
+          {/* <p className="text-[#1b130d] text-base font-bold mt-2">${price.toFixed(2)}</p> */}
         </div>
       </div>
       <div className="shrink-0">
-        <button
-          onClick={handleAddClick}
-          className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f3ece7] text-[#1b130d] text-sm font-medium leading-normal w-fit"
-        >
-          <span className="truncate">Add</span>
-        </button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className=" bg-cafe-700 text-white file:font-semibold
+                hover:bg-cafe-600"
+            >
+              Agregar variante
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-96">
+            <form onSubmit={handleSubmit} className="grid gap-4 space-x-3">
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">{nombreProducto}</h4>
+                <p className="text-sm text-muted-foreground">
+                  Completa los campos para agregar una nueva variante.
+                </p>
+              </div>
+              <div className="grid gap-4">
+                {/* Campo Width */}
+                <div className="grid grid-cols-3 items-center gap-2">
+                  <Label htmlFor="variante" className="text-right">
+                    Gramaje
+                  </Label>
+                  <Input
+                    id="variante"
+                    type="number"
+                    name="gramaje"
+                    value={formData.gramaje}
+                    onChange={handleChange}
+                    className="col-span-2 h-10"
+                  />
+                </div>
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                  <Label htmlFor="picture">Imagen</Label>
+                  <Input
+                    id="picture"
+                    accept="image/*"
+                    className="col-span-2 h-11"
+                    name="imagenVariante"
+                    type="file"
+                    onChange={(e) =>
+                      handleImageChange(e.target.files?.[0] || null)
+                    }
+                  />
+                </div>
+              </div>
+              {/* Botón para enviar */}
+              <Button
+                type="submit"
+                variant="default"
+                className="mt-4 mx-auto bg-cafe-500 text-white file:font-semibold
+                hover:bg-cafe-600"
+              >
+                Guardar variante
+              </Button>
+            </form>
+          </PopoverContent>
+        </Popover>
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 className="text-xl font-bold mb-4">{name}</h2>
-        <p className="mb-2">{description}</p>
-        <p className="mb-4">Base Price: ${price.toFixed(2)}</p>
-        <div className="mb-4">
-          <label htmlFor="profitPercentage" className="block mb-2">
-            Profit Percentage:
-          </label>
-          <input
-            type="number"
-            id="profitPercentage"
-            value={profitPercentage}
-            onChange={handleProfitChange}
-            className="w-full p-2 border rounded"
-            placeholder="Enter profit percentage"
-          />
-        </div>
-        <p className="text-lg font-bold mb-4">Final Price: ${finalPrice.toFixed(2)}</p>
-        <button onClick={() => setIsModalOpen(false)} className="bg-[#f3ece7] text-[#1b130d] px-4 py-2 rounded-xl">
-          Close
-        </button>
-      </Modal>
     </div>
-  )
+  );
 }
-

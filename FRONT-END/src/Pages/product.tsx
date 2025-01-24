@@ -5,14 +5,14 @@ import Header from "../components/common/Header"
 import ProductList from "../components/list/productList"
 import Pagination from "../components/common/Pagination"
 import AddProductModal from "../components/common/AddProductModal"
-
+import { productType } from "../types"
 // import Pagination from "../components/Pagination"
 // import AddProductModal from "../components/AddProductModal"
 
 export default function Products() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false)
 
-  const handleAddProduct = (product: any) => {
+  const handleAddProduct = (product: productType) => {
     // Aquí puedes implementar la lógica para agregar el producto a tu lista de productos
     console.log("New product:", product)
   }
@@ -20,7 +20,7 @@ export default function Products() {
   return (
     <div
       className="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] group/design-root overflow-x-hidden"
-      style={{ fontFamily: 'Epilogue, "Noto Sans", sans-serif' }}
+      // style={{ fontFamily: 'Epilogue, "Noto Sans", sans-serif' }}
     >
       <div className="layout-container flex h-full grow flex-col">
         <Header />

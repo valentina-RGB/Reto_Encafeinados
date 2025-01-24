@@ -43,7 +43,7 @@ class Server {
 
       // Sincronizar los modelos con la base de datos
       // await sequelize.sync({ force: true }); // -> Borra y crea las tablas (también elimina los datos)
-      // await sequelize.sync({ alter: true }); // -> Actualiza las tablas
+      //  await sequelize.sync({ alter: true }); // -> Actualiza las tablas
 
     } catch (error) {
       console.error("Error al sincronizar la base de datos:", error);
