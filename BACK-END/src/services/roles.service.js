@@ -16,7 +16,34 @@ const getOneRole = async (id) => {
     }
 };
 
+const createRole = async (role) => {
+    try {
+        return await roleRepository.createRole(role);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const updateRole = async (id, role) => {
+    try {
+        return await roleRepository.updateRole(id, role);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const deleteRole = async (id) => {
+    try {
+        return await roleRepository.deleteRole(id);
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     getAllRoles,
-    getOneRole
+    getOneRole,
+    createRole,
+    updateRole,
+    deleteRole
 };
