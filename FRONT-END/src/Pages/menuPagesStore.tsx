@@ -4,13 +4,13 @@ import { Button } from "primereact/button"; // Botón de PrimeReact
 const menuItems = [
   {
     title: "Productos",
-    description: "Gestionar inventario y precios",
-    icon: "pi pi-box", 
+    description: "Ver los productos disponibles",
+    icon: "pi pi-box",
   },
   {
     title: "Consignaciones",
-    description: "Registrar Consignaciones",
-    icon: "pi pi-dollar", 
+    description: "Ver las consignaciones",
+    icon: "pi pi-dollar",
   },
   {
     title: "Balance de Ventas",
@@ -19,30 +19,23 @@ const menuItems = [
   },
 ];
 
-const redirectTo = () => {
-
-  menuItems.forEach(element => {
-    if(element.title === "Productos"){
+const MenuPageStore = () => {
+  const redirectTo = (title: string) => {
+    if (title === "Productos") {
       window.location.href = "/product";
-      // navigate("/product");
-    }else if(element.title === "Consignaciones"){
-      window.location.href = "/shop";
-      // navigate("/shop");
-    }else if(element.title === "Ventas"){
+    } else if (title === "Consignaciones") {
       window.location.href = "/sales";
-      // navigate("/sales");
+    } else if (title === "Balance de Ventas") {
+      window.location.href = "/sales";
     }
-  });
+  };
 
-}
-
-export default function MenuPageStore() {
   return (
     <div className="min-h-screen bg-[#f5f4f4] font-sans flex items-center justify-center">
       <div className="mx-auto max-w-[960px] px-4 py-5">
         {/* Encabezado */}
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-black tracking-tight text-[#151313]">Bienvenido tienda "" a Encafeinados</h1>
+          <h1 className="text-4xl font-black tracking-tight text-[#151313]">Bienvenido a Encafeinados</h1>
           <p className="mt-2 text-base text-[#766b6c]">¿Qué quieres hacer hoy?</p>
         </div>
 
@@ -51,7 +44,8 @@ export default function MenuPageStore() {
           {menuItems.map((item) => (
             <Card
               key={item.title}
-              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-orange-500" 
+              className="flex flex-col gap-3 border-[#dbd7d7] bg-[#f5f4f4] p-4 transition-colors hover:bg-cafe-200"
+              onClick={() => redirectTo(item.title)}
             >
               {/* Icono */}
               <div className="text-[#151314]">
@@ -70,7 +64,7 @@ export default function MenuPageStore() {
                 className="p-button-rounded p-button-outline mt-2"
                 icon="pi pi-chevron-right"
                 style={{ width: "fit-content", alignSelf: "center" }}
-                onClick={redirectTo} 
+                onClick={() => redirectTo(item.title)}
               />
             </Card>
           ))}
@@ -78,4 +72,6 @@ export default function MenuPageStore() {
       </div>
     </div>
   );
-}
+};
+
+export default MenuPageStore;

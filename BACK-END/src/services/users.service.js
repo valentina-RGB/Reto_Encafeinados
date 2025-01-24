@@ -83,14 +83,14 @@ const sendEmail = async (email, password) => {
             to: email,
             subject: 'Credenciales de acceso a Encafeinados',
             text: `
-        ¡Hola, CoffeLover!
+¡Hola, CoffeLover!
         
-    Nos complace tenerte dentro de la comunidad de Encafeinados. Tus credenciales de acceso son las siguientes:
+Nos complace tenerte dentro de la comunidad de Encafeinados. Tus credenciales de acceso son las siguientes:
 
         Usuario: ${email}
         Contraseña: ${password}
 
-    Por favor, guarda esta información de manera segura.`
+Por favor, guarda esta información de manera segura.`
         };
         
         // Enviar correo

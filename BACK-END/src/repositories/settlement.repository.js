@@ -6,7 +6,6 @@ const getAllSettlement = async () => {
 
 const getOneSettlement = async (id) => {
     return await liquidacionproveedor.findByPk(id);
-
 };
 
 const createSettlement = async (settlement) => {

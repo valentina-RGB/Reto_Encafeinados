@@ -90,7 +90,7 @@ CREATE TABLE consignaciones (
     idConsignacion INT AUTO_INCREMENT PRIMARY KEY,
     idProveedor INT NOT NULL,
     fechaIngreso DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fechaDevolucion DATE,
+    fechaDevolucion DATE NOT NULL,
     cantidadTotalVendida INT DEFAULT 0,
     cantidadTotalDevuelta INT DEFAULT 0,
     estadoConsignacion ENUM('ACTIVA', 'FINALIZADA', 'DEVUELTA') NOT NULL DEFAULT 'ACTIVA',

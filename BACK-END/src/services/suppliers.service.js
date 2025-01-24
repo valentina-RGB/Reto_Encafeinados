@@ -1,5 +1,6 @@
 const supplierRepository = require('../repositories/suppliers.repository');
 const userService = require('./users.service');
+const stallmetService = require('./settlement.service');
 
 const gerAllSuppliers = async () => {
     try {
@@ -33,6 +34,8 @@ const createSupplier = async (supplier) => {
         const response = await supplierRepository.createSupplier(supplierFinal);
         
         if (!response) return ('No se pudo registrar el proveedor');
+
+        await stallmetService.createSettlement({ idProveedor: response.idProveedor });
 
         await userService.sendEmail(emailSupplier, password);
         
