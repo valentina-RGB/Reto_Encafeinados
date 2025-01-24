@@ -8,6 +8,33 @@ const getAllProducts = async () => {
     }
 };
 
+const getAllProductsAvailable = async () => {
+    try {
+        return await productRepository.getAllProductsAvailable();
+    } catch (error) {
+        throw error;
+    }
+};
+
+const createProduct = async (product) => {
+    try {
+        return await productRepository.createProduct(product);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const deleteProduct = async (id) => {
+    try {
+        return await productRepository.deleteProduct(id);
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
-    getAllProducts
+    getAllProducts,
+    getAllProductsAvailable,
+    createProduct,
+    deleteProduct
 };

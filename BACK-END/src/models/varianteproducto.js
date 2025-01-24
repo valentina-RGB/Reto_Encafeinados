@@ -9,11 +9,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     idProducto: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'productos',
         key: 'idProducto'
       }
+    },
+    imagenVariante: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     },
     gramaje: {
       type: DataTypes.INTEGER,

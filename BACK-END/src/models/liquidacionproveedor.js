@@ -7,17 +7,23 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    idConsignacion: {
+    idProveedor: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
-        model: 'consignaciones',
-        key: 'idConsignacion'
+        model: 'proveedores',
+        key: 'idProveedor'
       }
+    },
+    deudaActual: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: true,
+      defaultValue: 0.00
     },
     estadoLiquidacion: {
       type: DataTypes.ENUM('PENDIENTE','PAGADA'),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "PENDIENTE"
     }
   }, {
     sequelize,
@@ -33,10 +39,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idConsignacion",
+        name: "idProveedor",
         using: "BTREE",
         fields: [
-          { name: "idConsignacion" },
+          { name: "idProveedor" },
         ]
       },
     ]

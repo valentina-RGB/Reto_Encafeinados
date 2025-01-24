@@ -8,7 +8,13 @@ const getOneSupplier = async (id) => {
     return await proveedores.findByPk(id);
 };
 
+const createSupplier = async (supplier) => {
+    return await proveedores.create(supplier);
+};
+
+
 module.exports = {
     getAllSupliers,
-    getOneSupplier
+    getOneSupplier,
+    createSupplier
 };

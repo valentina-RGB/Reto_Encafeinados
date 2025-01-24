@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idConsignacion: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'consignaciones',
         key: 'idConsignacion'
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idVarianteProducto: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'varianteproducto',
         key: 'idVariante'
@@ -72,16 +72,17 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idConsignacion",
-        using: "BTREE",
-        fields: [
-          { name: "idConsignacion" },
-        ]
-      },
-      {
         name: "idVarianteProducto",
         using: "BTREE",
         fields: [
+          { name: "idVarianteProducto" },
+        ]
+      },
+      {
+        name: "idx_consignacion_variante",
+        using: "BTREE",
+        fields: [
+          { name: "idConsignacion" },
           { name: "idVarianteProducto" },
         ]
       },

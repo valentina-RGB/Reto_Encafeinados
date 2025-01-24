@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     idProveedor: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'proveedores',
         key: 'idProveedor'
@@ -23,6 +23,16 @@ module.exports = function(sequelize, DataTypes) {
     fechaDevolucion: {
       type: DataTypes.DATEONLY,
       allowNull: true
+    },
+    cantidadTotalVendida: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    cantidadTotalDevuelta: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     },
     estadoConsignacion: {
       type: DataTypes.ENUM('ACTIVA','FINALIZADA','DEVUELTA'),
